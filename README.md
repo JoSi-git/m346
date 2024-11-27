@@ -1,4 +1,4 @@
-# # WordPress auf AWS – Setup-Anleitung
+# WordPress auf AWS – Setup-Anleitung
 
 <div align="center">
     <!-- Button für Silas Gubler -->
@@ -55,7 +55,4 @@ Klonen Sie dieses Repository auf Ihren lokalen Rechner:
 git clone https://github.com/JoSi-git/m364.git
 cd <repository-name>
 ```
-
----
-
 
