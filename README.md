@@ -17,7 +17,6 @@
     <span style="display: inline-block; text-decoration: none; color: white; background-color: #808080; padding: 10px 20px; border-radius: 5px; font-weight: bold; margin: 5px;">Version 0.2</span>
 </div>
 
-
 ## 📜 Überblick
 Diese Anleitung beschreibt die Schritte, um eine WordPress-Installation in der Amazon Web Services (AWS) Cloud bereitzustellen. Alle notwendigen Konfigurationsdateien und Skripte befinden sich in diesem Repository. Folgen Sie den untenstehenden Schritten, um die Installation nachzustellen.
 
