@@ -18,12 +18,9 @@
 </div>
 
 ## 📜 Überblick
----
 Diese Anleitung beschreibt die Schritte, um eine WordPress-Installation in der Amazon Web Services (AWS) Cloud bereitzustellen. Alle notwendigen Konfigurationsdateien und Skripte befinden sich in diesem Repository. Folgen Sie den untenstehenden Schritten, um die Installation nachzustellen.
 
----
 ## 📂 Inhaltsverzeichnis + Projectstruktur
----
 1. [Voraussetzungen](#-voraussetzungen)
 2. [Installation](#-installation)
 3. [Testfälle](#-testfälle)
@@ -37,10 +34,7 @@ Diese Anleitung beschreibt die Schritte, um eine WordPress-Installation in der A
 ├── .gitignore             # Git-Ausnahmen
 └── README.md              # Dieses Dokument
 
----
-
 ## ✅ Voraussetzungen
----
 Bevor Sie starten, stellen Sie sicher, dass folgende Anforderungen erfüllt sind:
 - Ein AWS-Account mit administrativen Berechtigungen.
 - AWS CLI ist installiert und konfiguriert.
@@ -48,11 +42,7 @@ Bevor Sie starten, stellen Sie sicher, dass folgende Anforderungen erfüllt sind
 - Git ist installiert.
 - Ein Webbrowser für den Zugriff auf die WordPress-Seite.
 
-
----
-
 ## 🚀 Installation
----
 ### 1. Repository klonen
 Klonen Sie dieses Repository auf Ihren lokalen Rechner:
 ```bash
