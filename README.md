@@ -46,6 +46,7 @@ Bevor Sie starten, stellen Sie sicher, dass folgende Anforderungen erfüllt sind
 - Git ist installiert.
 - Ein Webbrowser für den Zugriff auf die WordPress-Seite.
 
+
 ---
 
 ## 🚀 Installation
