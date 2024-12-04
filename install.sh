@@ -1,3 +1,5 @@
 #!/bin/bash
 
-# Mit diesem script wird ein instance auf aws s3 erstellt.
+# run config, to setup aws ec2 as the webserver
+
+bash ./scripts/config.sh
