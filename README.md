@@ -1,5 +1,8 @@
 # WordPress auf AWS – Setup-Anleitung
 
+![build](https://github.com/buttons/github-buttons/workflows/build/badge.svg)
+[![npm](https://img.shields.io/npm/v/github-buttons)](https://www.npmjs.com/github-buttons)
+
 <div style="text-align: center;">
     <!-- Silas Gubler Button -->
     <a href="https://github.com/arkaizn" style="display: inline-block; text-decoration: none; color: white; background-color: #FF4500; padding: 10px 20px; border-radius: 5px; font-weight: bold; margin: 5px;">Silas Gubler</a>
