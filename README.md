@@ -1,9 +1,10 @@
 # WordPress auf AWS – Setup-Anleitung
 
-[![Silas Gubler](https://img.shields.io/badge/Silas_Gubler-FF4500?style=for-the-badge)](https://github.com/arkaizn)
-[![David Kästli](https://img.shields.io/badge/David_Kästli-32CD32?style=for-the-badge)](https://github.com/dka-stat)
-[![Jonas Sieber](https://img.shields.io/badge/Jonas_Sieber-1E90FF?style=for-the-badge)](https://github.com/josi-git)
-[![Lizenz](https://img.shields.io/badge/Lizenz-FFD700?style=for-the-badge)](https://github.com/JoSi-git/m346/blob/main/LICENSE)
+[![Silas Gubler](https://img.shields.io/badge/Silas_Gubler-FF4500?style=for-the-badge&labelColor=000000)](https://github.com/arkaizn)  
+[![David Kästli](https://img.shields.io/badge/David_Kästli-32CD32?style=for-the-badge&labelColor=000000)](https://github.com/dka-stat)  
+[![Jonas Sieber](https://img.shields.io/badge/Jonas_Sieber-1E90FF?style=for-the-badge&labelColor=000000)](https://github.com/josi-git)  
+[![Lizenz](https://img.shields.io/badge/Lizenz-FFD700?style=for-the-badge&labelColor=000000)](https://github.com/JoSi-git/m346/blob/main/LICENSE)  
+
 
 ## 📜 Überblick
 Diese Anleitung beschreibt die Schritte, um eine WordPress-Installation in der Amazon Web Services (AWS) Cloud bereitzustellen. Alle notwendigen Konfigurationsdateien und Skripte befinden sich in diesem Repository. Folgen Sie den untenstehenden Schritten, um die Installation nachzustellen.
