@@ -2,11 +2,9 @@
 # create key pair, to access aws
 aws ec2 create-key-pair --key-name djs-key --key-type rsa --query 'KeyMaterial' --output text > ~/.ssh/djs-key.pem
 
-aws ec2 create-security-group --group-name djs-sec-group --description "EC2-Webserver-DJS" ,
-aws ec2 authorize-security-group-ingress --group-name djs-sec-group
---protocol tcp --port 80 --cidr 0.0.0.0/0 ,→
-aws ec2 authorize-security-group-ingress --group-name djs-sec-group
---protocol tcp --port 22 --cidr 0.0.0.0/0
+aws ec2 create-security-group --group-name djs-sec-group --description "EC2-Webserver-DJS"
+aws ec2 authorize-security-group-ingress --group-name djs-sec-group --protocol tcp --port 80 --cidr 0.0.0.0/0
+aws ec2 authorize-security-group-ingress --group-name djs-sec-group --protocol tcp --port 22 --cidr 0.0.0.0/0
 
 (
     cd ./ec2webserver
