@@ -1,17 +1,9 @@
 # WordPress auf AWS – Setup-Anleitung
 
-<div style="text-align: center;">
-    <!-- Silas Gubler Button -->
-    <a href="https://github.com/arkaizn" style="display: inline-block; text-decoration: none; color: white; background-color: #FF4500; padding: 10px 20px; border-radius: 5px; font-weight: bold; margin: 5px;">Silas Gubler</a>
-    <!-- David Kästli Button -->
-    <a href="https://github.com/dka-stat" style="display: inline-block; text-decoration: none; color: white; background-color: #32CD32; padding: 10px 20px; border-radius: 5px; font-weight: bold; margin: 5px;">David Kästli</a>
-    <!-- Jonas Sieber Button -->
-    <a href="https://github.com/josi-git" style="display: inline-block; text-decoration: none; color: white; background-color: #1E90FF; padding: 10px 20px; border-radius: 5px; font-weight: bold; margin: 5px;">Jonas Sieber</a>
-    <!-- Lizenz Button -->
-    <a href="https://github.com/JoSi-git/m346/blob/main/LICENSE" style="display: inline-block; text-decoration: none; color: white; background-color: #FFD700; padding: 10px 20px; border-radius: 5px; font-weight: bold; margin: 5px;">Lizenz</a>
-    <!-- Version -->
-    <span style="display: inline-block; text-decoration: none; color: white; background-color: #808080; padding: 10px 20px; border-radius: 5px; font-weight: bold; margin: 5px;">Version 0.2</span>
-</div>
+[![Silas Gubler](https://img.shields.io/badge/Silas_Gubler-FF4500?style=for-the-badge)](https://github.com/arkaizn)
+[![David Kästli](https://img.shields.io/badge/David_Kästli-32CD32?style=for-the-badge)](https://github.com/dka-stat)
+[![Jonas Sieber](https://img.shields.io/badge/Jonas_Sieber-1E90FF?style=for-the-badge)](https://github.com/josi-git)
+[![Lizenz](https://img.shields.io/badge/Lizenz-FFD700?style=for-the-badge)](https://github.com/JoSi-git/m346/blob/main/LICENSE)
 
 ## 📜 Überblick
 Diese Anleitung beschreibt die Schritte, um eine WordPress-Installation in der Amazon Web Services (AWS) Cloud bereitzustellen. Alle notwendigen Konfigurationsdateien und Skripte befinden sich in diesem Repository. Folgen Sie den untenstehenden Schritten, um die Installation nachzustellen.
