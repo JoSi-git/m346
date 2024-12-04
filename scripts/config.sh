@@ -9,6 +9,7 @@ aws ec2 authorize-security-group-ingress --group-name djs-sec-group --protocol t
 (
     cd ~/ec2webserver
     aws ec2 run-instances --image-id ami-08c40ec9ead489470 --count 1 --instance-type t2.micro --key-name djs-key --security-groups djs-sec-group --iam-instance-profile Name=LabInstanceProfile --user-data file://initial.txt --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=Webserver}]'
-
 )
+
+aws ec2 describe-instances --query "Reservations[*].Instances[*].PublicIpAddress" --output text
 
