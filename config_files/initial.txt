@@ -1,3 +1,40 @@
 #!/bin/bash
-sudo apt-get update
-sudo apt-get -y install apache2
+
+# Update the package list
+sudo apt update -y
+
+# Install Apache web server
+sudo apt install -y apache2
+
+# Start Apache service and enable it to run on boot
+sudo systemctl start apache2
+sudo systemctl enable apache2
+
+# Create a simple HTML file for testing
+echo "<html><body><h1>Welcome to My Web Server!</h1></body></html>" | sudo tee /var/www/html/index.html
+
+# Install PHP (if needed for WordPress or other CMS)
+sudo apt install -y php libapache2-mod-php php-mysql
+
+# Restart Apache to apply changes
+sudo systemctl restart apache2
+
+# Optional: Install MySQL if you plan to use a database
+sudo apt install -y mysql-server
+sudo systemctl start mysql
+sudo systemctl enable mysql
+
+# Optional: Install WordPress (for example)
+# Download WordPress and move it to the web server directory
+cd /tmp
+wget https://wordpress.org/latest.tar.gz
+tar xzvf latest.tar.gz
+sudo cp -R /tmp/wordpress/* /var/www/html/
+
+# Set the correct permissions
+sudo chown -R www-data:www-data /var/www/html
+
+# Restart Apache to serve WordPress
+sudo systemctl restart apache2
+
+echo "Server setup complete. You can now access the web server at your Elastic IP address."
