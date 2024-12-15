@@ -29,7 +29,7 @@ if [ ! -d ~/ec2webserver ]; then
 fi
 
 # Prüfen, ob initial.txt existiert
-USER_DATA_FILE="initial.txt"
+USER_DATA_FILE="./config_files/initial.txt"
 if [ ! -f $USER_DATA_FILE ]; then
     echo "Fehler: $USER_DATA_FILE nicht gefunden. Erstelle die Datei oder überprüfe den Pfad."
     exit 1
@@ -37,6 +37,7 @@ fi
 
 # EC2-Instanz starten
 echo "Starte EC2-Instanz..."
+export AWS_PAGER=""
 aws ec2 run-instances \
     --image-id ami-08c40ec9ead489470 \
     --count 1 \
@@ -47,5 +48,5 @@ aws ec2 run-instances \
     --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=Webserver}]'
 
 # Öffentliche IP-Adresse der Instanz abrufen
-echo "Öffentliche IP-Adresse der EC2-Instanz:"
-aws ec2 describe-instances --query "Reservations[*].Instances[*].PublicIpAddress" --output text
+echo "Instanz-ID und öffentliche IP-Adresse der EC2-Instanzen:"
+aws ec2 describe-instances --query "Reservations[*].Instances[*].[InstanceId, PublicIpAddress]" --output table | sed 's/DescribeInstances/EC2-Instanzen/'
