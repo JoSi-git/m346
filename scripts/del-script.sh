@@ -38,4 +38,29 @@ else
     echo "Key Pair $KEY_NAME existiert nicht."
 fi
 
+# Elastic IPs löschen
+
+# Alle Elastic IPs abrufen und als Text anzeigen
+elastic_ips=$(aws ec2 describe-addresses --query 'Addresses[*].[AllocationId]' --output text)
+
+# Überprüfen, ob Elastic IPs vorhanden sind
+if [ -z "$elastic_ips" ]; then
+    echo "Keine Elastic IPs gefunden."
+    exit 1
+else
+    echo "Gefundene Elastic IPs:"
+    echo "$elastic_ips"
+fi
+
+# Jede Elastic IP freigeben
+for allocation_id in $elastic_ips; do
+    echo "Freigeben der Elastic IP mit Allocation-ID: $allocation_id"
+    aws ec2 release-address --allocation-id $allocation_id
+    if [ $? -eq 0 ]; then
+        echo "Elastic IP erfolgreich freigegeben."
+    else
+        echo "Fehler beim Freigeben der Elastic IP mit Allocation-ID: $allocation_id"
+    fi
+done
+
 echo "Alle Ressourcen wurden erfolgreich entfernt."
