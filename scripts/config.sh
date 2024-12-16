@@ -28,10 +28,10 @@ if [ ! -d ~/ec2webserver ]; then
     mkdir -p ~/ec2webserver
 fi
 
-# Prüfen, ob initial.txt existiert
-USER_DATA_FILE="./config_files/initial.txt"
-if [ ! -f $USER_DATA_FILE ]; then
-    echo "Fehler: $USER_DATA_FILE nicht gefunden. Erstelle die Datei oder überprüfe den Pfad."
+# Prüfen, ob wpinstall.sh existiert
+Wordpress_installation_File="./config_files/wpinstall.sh"
+if [ ! -f $Wordpress_installation_File ]; then
+    echo "Fehler: $Wordpress_installation_File nicht gefunden. Erstelle die Datei oder überprüfe den Pfad."
     exit 1
 fi
 
@@ -44,8 +44,51 @@ aws ec2 run-instances \
     --instance-type t2.micro \
     --key-name djs-key \
     --security-groups $SEC_GROUP_NAME \
-    --user-data file://$USER_DATA_FILE \
     --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=Webserver}]'
+
+# Ermitteln der Public IP der Webserver-Instanz
+echo "Ermittle die Public IP der Webserver-Instanz..."
+PUBLIC_IP=$(aws ec2 describe-instances \
+  --filters "Name=tag:Name,Values=Webserver" \
+  --query "Reservations[].Instances[].PublicIpAddress" \
+  --output text)
+
+# Prüfen, ob die Public IP gefunden wurde
+if [ -z "$PUBLIC_IP" ]; then
+  echo "Fehler: Keine Public IP gefunden. Bitte überprüfe die Filter und die Instanz-Konfiguration."
+  exit 1
+fi
+
+echo "Gefundene Public IP: $PUBLIC_IP"
+
+# SSH-Verbindung herstellen und wpinstall.sh ausführen
+echo "Kopiere das install_wordpress.sh-Skript auf die Instanz..."
+
+# Kopiere das Skript auf die Instanz
+scp -i ~/.ssh/djs-key.pem -o StrictHostKeyChecking=accept-new ./config_files/wpinstall.sh ubuntu@"$PUBLIC_IP":/home/ubuntu/wpinstall.sh
+
+# Prüfe, ob der Upload erfolgreich war
+if [ $? -ne 0 ]; then
+    echo "Fehler: Das Skript konnte nicht auf die Instanz kopiert werden."
+    exit 1
+fi
+
+# Führe das WordPress-Installationsskript auf der Instanz aus
+echo "Führe das WordPress-Installationsskript auf der Instanz aus..."
+ssh -i ~/.ssh/djs-key.pem -o StrictHostKeyChecking=accept-new ubuntu@"$PUBLIC_IP" << 'EOF'
+    echo "Setze Berechtigungen für wpinstall.sh.."
+    chmod +x /home/ubuntu/wpinstall.sh
+    echo "Starte die Ausführung von wpinstall.sh..."
+    /home/ubuntu/wpinstall.sh
+EOF
+
+# Prüfe, ob die Ausführung erfolgreich war
+if [ $? -ne 0 ]; then
+    echo "Fehler: Das WordPress-Installationsskript konnte nicht erfolgreich ausgeführt werden."
+    exit 1
+else
+    echo "WordPress-Installation erfolgreich abgeschlossen!"
+fi
 
 # Öffentliche IP-Adresse der Instanz abrufen
 echo "Instanz-ID und öffentliche IP-Adresse der EC2-Instanzen:"

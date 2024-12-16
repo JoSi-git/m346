@@ -3,6 +3,13 @@
 # run config, to setup aws ec2 as the webserver
 bash ./scripts/config.sh
 
+# Überprüfe, ob config.sh erfolgreich war
+if [[ $? -ne 0 ]]; then
+    echo "Fehler: config.sh konnte nicht erfolgreich ausgeführt werden."
+    echo "Installation wird abgebrochen."
+    exit 1  # Beende das Skript mit einem Fehlerstatus
+fi
+
 # Frage den Benutzer, ob eine Elastic IP konfiguriert werden soll
 while true; do
     read -p "Möchten Sie eine Elastic IP konfigurieren? (j/n): " user_input
