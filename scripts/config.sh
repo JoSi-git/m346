@@ -35,28 +35,42 @@ if [ ! -f $Wordpress_installation_File ]; then
     exit 1
 fi
 
-# EC2-Instanz starten
+# Starte die Instanz und extrahiere die Instanz-ID direkt
 echo "Starte EC2-Instanz..."
 export AWS_PAGER=""
-aws ec2 run-instances \
-    --image-id ami-08c40ec9ead489470 \
-    --count 1 \
-    --instance-type t2.micro \
-    --key-name djs-key \
-    --security-groups $SEC_GROUP_NAME \
-    --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=Webserver}]'
 
-# Ermitteln der Public IP der Webserver-Instanz
-echo "Ermittle die Public IP der Webserver-Instanz..."
+INSTANCE_ID=$(aws ec2 run-instances \
+--image-id ami-08c40ec9ead489470 \
+--count 1 \
+--instance-type t2.micro \
+--key-name djs-key \
+--security-groups $SEC_GROUP_NAME \
+--tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=Webserver}]' \
+--query 'Instances[0].InstanceId' \
+--output text)
+
+# Prüfe, ob eine Instanz-ID zurückgegeben wurde
+if [ -z "$INSTANCE_ID" ]; then
+    echo "Fehler: Keine Instanz-ID erhalten."
+    exit 1
+fi
+
+echo "Gestartete Instanz-ID: $INSTANCE_ID"
+
+# Warte auf Instanz-Bereitschaft
+echo "Warte auf Instanz-Bereitschaft..."
+aws ec2 wait instance-running --instance-ids "$INSTANCE_ID"
+
+# Ermittle die Public IP der Instanz
 PUBLIC_IP=$(aws ec2 describe-instances \
-  --filters "Name=tag:Name,Values=Webserver" \
-  --query "Reservations[].Instances[].PublicIpAddress" \
-  --output text)
+--instance-ids "$INSTANCE_ID" \
+--query "Reservations[].Instances[].PublicIpAddress" \
+--output text)
 
-# Prüfen, ob die Public IP gefunden wurde
+# Prüfe, ob eine Public IP gefunden wurde
 if [ -z "$PUBLIC_IP" ]; then
-  echo "Fehler: Keine Public IP gefunden. Bitte überprüfe die Filter und die Instanz-Konfiguration."
-  exit 1
+    echo "Fehler: Keine Public IP gefunden."
+    exit 1
 fi
 
 echo "Gefundene Public IP: $PUBLIC_IP"
