@@ -60,7 +60,6 @@ echo "Gefundene Public IP: $PUBLIC_IP1"
 echo "Kopiere das install_MySQL.sh-Skript auf die Instanz..."
 # Kopiere das Skript auf die Instanz
 scp -i ~/.ssh/$KEY_NAME.pem -o StrictHostKeyChecking=accept-new ./config_files/mysqlinstall.sh ubuntu@"$PUBLIC_IP1":/home/ubuntu/mysqlinstall.sh
-scp -i ~/.ssh/$KEY_NAME.pem -o StrictHostKeyChecking=accept-new ./config_files/variables.sh ubuntu@"$PUBLIC_IP1":/home/ubuntu/variables.sh
 
 
 # Prüfe, ob der Upload erfolgreich war
