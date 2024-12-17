@@ -32,6 +32,13 @@ if [[ "$CONFIG_STEP" == "1" ]]; then
     sed -i "s|^CONFIG_STEP=.*|CONFIG_STEP=2|" ./config_files/variables.sh
     echo "Konfiguration von Instanz 1 abgeschlossen."
 
+    # Tabellarische Ausgabe von Instanznummer und IP Addresse
+    echo "+------------------------------+------------------------------+"  
+    printf "| %-30s | %-30s |\n" "Instanz-ID" "Öffentliche IP"
+    echo "+------------------------------+------------------------------+"  
+    printf "| %-30s | %-30s |\n" "$INSTANCE_ID1" "$PUBLIC_IP1"
+    echo "+------------------------------+------------------------------+"  
+
 elif [[ "$CONFIG_STEP" == "2" ]]; then
     echo "Starte Konfiguration der Elastic IP für Instanz 2 ($INSTANCE_ID2)..."
 
@@ -58,6 +65,15 @@ elif [[ "$CONFIG_STEP" == "2" ]]; then
     # Aktualisiere den Status der Konfiguration (auf abgeschlossen setzen)
     sed -i "s|^CONFIG_STEP=.*|CONFIG_STEP=done|" ./config_files/variables.sh
     echo "Konfiguration von Instanz 2 abgeschlossen."
+    echo""
+
+    # Tabellarische Ausgabe von Instanznummer und IP Addresse
+    echo "Mit den folgenden Daten kann auf die fertige WordPress-Instanz zugegriffen werden:"
+    echo "+------------------------------+------------------------------+"  
+    printf "| %-30s | %-30s |\n" "Instanz-ID" "Öffentliche IP"
+    echo "+------------------------------+------------------------------+"  
+    printf "| %-30s | %-30s |\n" "$INSTANCE_ID2" "$NEW_PUBLIC_IP"
+    echo "+------------------------------+------------------------------+"  
 
 else
     echo "Alle Elastic IPs wurden bereits konfiguriert. Keine weiteren Schritte erforderlich."
