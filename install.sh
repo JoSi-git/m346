@@ -1,5 +1,6 @@
 #!/bin/bash
 set -e  # Beendet das Skript bei Fehlern
+source ./config_files/variables.sh
 
 echo ""
 echo "DJS EDC2 Wordpress Installer"

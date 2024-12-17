@@ -1,6 +1,9 @@
 #!/bin/bash
 set -e  # Beendet das Skript bei Fehlern
 
+# Variablen definieren
+source ./config_files/variables.sh
+
 # Schritt 1: Erstelle eine neue Elastic IP
 echo "Erstelle eine frische Elastic IP-Adresse..."
 NEW_ALLOCATION=$(aws ec2 allocate-address --query "AllocationId" --output text)

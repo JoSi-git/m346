@@ -1,21 +1,20 @@
 #!/bin/bash
 set -e  # Beendet das Skript bei Fehlern
 
-# Sleep-Parameter als Variable definieren
-SLEEP_DURATION=20  # Zeit in Sekunden
+# Variablen definieren
+source ./config_files/variables.sh
 
 # Key Pair erstellen
-if [ ! -f ~/.ssh/djs-key.pem ]; then
+if [ ! -f ~/.ssh/$KEY_NAME.pem ]; then
     echo "Erstelle Key Pair..."
     mkdir -p ~/.ssh
-    aws ec2 create-key-pair --key-name djs-key --key-type rsa --query 'KeyMaterial' --output text > ~/.ssh/djs-key.pem
-    chmod 400 ~/.ssh/djs-key.pem
+    aws ec2 create-key-pair --key-name $KEY_NAME --key-type rsa --query 'KeyMaterial' --output text > ~/.ssh/$KEY_NAME.pem
+    chmod 400 ~/.ssh/$KEY_NAME.pem
 else
-    echo "Key Pair ~/.ssh/djs-key.pem existiert bereits."
+    echo "Key Pair ~/.ssh/$KEY_NAME.pem existiert bereits."
 fi
 
 # Sicherheitsgruppe erstellen
-SEC_GROUP_NAME="djs-sec-group"
 echo "Erstelle Sicherheitsgruppe..."
 if ! aws ec2 describe-security-groups --group-names $SEC_GROUP_NAME &>/dev/null; then
     aws ec2 create-security-group --group-name $SEC_GROUP_NAME --description "EC2-Webserver-DJS"
@@ -42,32 +41,32 @@ fi
 echo "Starte MySQL EC2-Instanz..."
 export AWS_PAGER=""
 
-INSTANCE_ID=$(aws ec2 run-instances \
+$INSTANCE_ID1=$(aws ec2 run-instances \
 --image-id ami-08c40ec9ead489470 \
 --count 1 \
 --instance-type t2.micro \
---key-name djs-key \
+--key-name $KEY_NAME \
 --security-groups $SEC_GROUP_NAME \
 --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=Webserver}]' \
 --query 'Instances[0].InstanceId' \
 --output text)
 
 # Prüfe, ob eine Instanz-ID zurückgegeben wurde
-if [ -z "$INSTANCE_ID" ]; then
+if [ -z "$$INSTANCE_ID1" ]; then
     echo "Fehler: Keine Instanz-ID erhalten."
     exit 1
 fi
 
-echo "Gestartete Instanz-ID: $INSTANCE_ID"
+echo "Gestartete Instanz-ID: $$INSTANCE_ID1"
 
 # Ermittle die Public IP der Instanz
-PUBLIC_IP=$(aws ec2 describe-instances \
---instance-ids "$INSTANCE_ID" \
+PUBLIC_IP1=$(aws ec2 describe-instances \
+--instance-ids "$$INSTANCE_ID1" \
 --query "Reservations[].Instances[].PublicIpAddress" \
 --output text)
 
 # Prüfe, ob eine Public IP gefunden wurde
-if [ -z "$PUBLIC_IP" ]; then
+if [ -z "$PUBLIC_IP1" ]; then
     echo "Fehler: Keine Public IP gefunden."
     exit 1
 fi
@@ -75,12 +74,12 @@ fi
 # Initialisierungsprozess abwarten
 sleep $SLEEP_DURATION
 
-echo "Gefundene Public IP: $PUBLIC_IP"
+echo "Gefundene Public IP: $PUBLIC_IP1"
 
 # SSH-Verbindung herstellen und mysqlinstall.sh ausführen
 echo "Kopiere das install_MySQL.sh-Skript auf die Instanz..."
 # Kopiere das Skript auf die Instanz
-scp -i ~/.ssh/djs-key.pem -o StrictHostKeyChecking=accept-new ./config_files/mysqlinstall.sh ubuntu@"$PUBLIC_IP":/home/ubuntu/mysqlinstall.sh
+scp -i ~/.ssh/$KEY_NAME.pem -o StrictHostKeyChecking=accept-new ./config_files/mysqlinstall.sh ubuntu@"$PUBLIC_IP1":/home/ubuntu/mysqlinstall.sh
 
 # Prüfe, ob der Upload erfolgreich war
 if [ $? -ne 0 ]; then
@@ -93,7 +92,7 @@ echo "--------------------------------------------------------------------------
 
 # Führe das MySQL-Installationsskript auf der Instanz aus
 echo "Führe das MySQL-Installationsskript auf der Instanz aus..."
-ssh -i ~/.ssh/djs-key.pem -o StrictHostKeyChecking=accept-new ubuntu@"$PUBLIC_IP" << 'EOF'
+ssh -i ~/.ssh/$KEY_NAME.pem -o StrictHostKeyChecking=accept-new ubuntu@"$PUBLIC_IP1" << 'EOF'
     echo "Setze Berechtigungen für mysqlinstall.sh.."
     chmod +x /home/ubuntu/mysqlinstall.sh
     echo "Starte die Ausführung von mysqlinstall.sh..."
@@ -114,5 +113,11 @@ fi
 echo "+------------------------------+------------------------------+"  
 printf "| %-30s | %-30s |\n" "Instanz-ID" "Öffentliche IP"
 echo "+------------------------------+------------------------------+"  
-printf "| %-30s | %-30s |\n" "$INSTANCE_ID" "$PUBLIC_IP"
+printf "| %-30s | %-30s |\n" "$INSTANCE_ID1" "$PUBLIC_IP1"
 echo "+------------------------------+------------------------------+"  
+
+
+# variablen in file schrieben
+echo "INSTANCE_ID1=\"$INSTANCE_ID1\"" >> ./config_files/variables.sh
+echo "PUBLIC_IP1=\"$PUBLIC_IP1\"" >> ./config_files/variables.sh
+echo "MySQL_installation_File=\"$MySQL_installation_File\"" >> ./config_files/variables.sh

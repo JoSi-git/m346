@@ -1,9 +1,8 @@
 #!/bin/bash
 set -e  # Beendet das Skript bei Fehlern
 
-# Variablen
-KEY_NAME="djs-key"
-SEC_GROUP_NAME="djs-sec-group"
+# Variablen definieren
+source ./config_files/variables.sh
 
 # EC2-Instanz(en) suchen und beenden
 echo "Suche EC2-Instanz(en) mit Sicherheitsgruppe $SEC_GROUP_NAME..."
@@ -64,3 +63,7 @@ for allocation_id in $elastic_ips; do
 done
 
 echo "Alle Ressourcen wurden erfolgreich entfernt."
+
+# variablen in file schrieben
+echo "KEY_NAME=\"$KEY_NAME\"" >> ./config_files/variables.sh
+echo "SEC_GROUP_NAME=\"$SEC_GROUP_NAME\"" >> ./config_files/variables.sh
