@@ -68,7 +68,9 @@ elif [[ "$CONFIG_STEP" == "2" ]]; then
     echo""
 
     # Tabellarische Ausgabe von Instanznummer und IP Addresse
-    echo "Mit den folgenden Daten kann auf die fertige WordPress-Instanz zugegriffen werden:"
+    clear
+    echo ""
+    echo -e "\e[1mMit den folgenden Daten kann auf die fertige WordPress-Instanz zugegriffen werden:\e[0m"
     echo "+------------------------------+------------------------------+"  
     printf "| %-30s | %-30s |\n" "Instanz-ID" "Öffentliche IP"
     echo "+------------------------------+------------------------------+"  
