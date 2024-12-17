@@ -29,8 +29,6 @@ cd <repository-name>
 ```
 ## 📂 Repository Struktur  
 
----
-
 ### 🛠️ 1. config_files  
 Enthält Konfigurationsdateien, die für Dienste und Anwendungen wie WordPress benötigt werden.  
 Es gibt einen Unterordner **`wordpress_files`**, der spezifische Konfigurations- oder Installationsskripte für WordPress enthält:  
@@ -66,3 +64,5 @@ Enthält Informationen zur Lizenzierung des Projekts.
 Eine Markdown-Datei, die normalerweise eine Erklärung des Projekts, der Struktur und der Verwendung enthält.  
 
 ---
+
+## 📜 Skript erklärungen
