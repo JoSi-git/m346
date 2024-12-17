@@ -1,67 +1,65 @@
 #!/bin/bash
 set -e  # Beendet das Skript bei Fehlern
 
-# Variablen definieren
+# Variablen aus der Konfigurationsdatei laden
 source ./config_files/variables.sh
 
-# Schritt 1: Erstelle eine neue Elastic IP
-echo "Erstelle eine frische Elastic IP-Adresse..."
-NEW_ALLOCATION=$(aws ec2 allocate-address --query "AllocationId" --output text)
+# Überprüfen, welcher Schritt der Konfiguration ausgeführt werden soll
+if [[ "$CONFIG_STEP" == "1" ]]; then
+    echo "Starte Konfiguration der Elastic IP für Instanz 1 ($INSTANCE_ID1)..."
 
-# Prüfe, ob die Erstellung erfolgreich war
-if [ -z "$NEW_ALLOCATION" ]; then
-  echo "Fehler: Konnte keine neue Elastic IP erstellen."
-  exit 1
-fi
+    # Neue Elastic IP erstellen
+    NEW_ALLOCATION=$(aws ec2 allocate-address --query "AllocationId" --output text)
 
-echo "Elastic IP erfolgreich erstellt. Zuordnung-ID: $NEW_ALLOCATION"
+    if [ -z "$NEW_ALLOCATION" ]; then
+        echo "Fehler: Konnte keine neue Elastic IP erstellen."
+        exit 1
+    fi
 
-# Schritt 2: Hole alle Instanzen mit dem Tag Name (optional kannst du den Tag weiter anpassen)
-echo "Suche alle Instanzen mit dem Tag Name..."
-INSTANCES=$(aws ec2 describe-instances \
-  --query "Reservations[].Instances[].[InstanceId,Tags[?Key=='Name'].Value | [0]]" \
-  --output text)
+    echo "Neue Elastic IP erfolgreich erstellt. Zuordnung-ID: $NEW_ALLOCATION"
 
-# Wenn keine Instanzen gefunden wurden, beenden
-if [ -z "$INSTANCES" ]; then
-  echo "Fehler: Keine Instanzen gefunden."
-  exit 1
-fi
+    # Elastic IP mit Instanz 1 verknüpfen
+    aws ec2 associate-address --instance-id "$INSTANCE_ID1" --allocation-id "$NEW_ALLOCATION"
 
-# Zeige die Instanzen an und lass den Benutzer eine auswählen
-echo "Verfügbare Instanzen:"
-echo "$INSTANCES" | nl
+    # Öffentliche IP der Elastic IP abrufen
+    NEW_PUBLIC_IP=$(aws ec2 describe-addresses --allocation-ids "$NEW_ALLOCATION" --query "Addresses[0].PublicIp" --output text)
+    echo "Die neue öffentliche IP für Instanz 1 lautet: $NEW_PUBLIC_IP"
 
-# Benutzer zur Auswahl auffordern
-echo "Wählen Sie die Instanz aus (geben Sie die Nummer ein):"
-read -p "Instanznummer: " SELECTION
+    # Aktualisiere PUBLIC_IP1 in der Konfigurationsdatei
+    sed -i "s|^PUBLIC_IP1=.*|PUBLIC_IP1=\"$NEW_PUBLIC_IP\"|" ./config_files/variables.sh
 
-# Holen der Instanz-ID basierend auf der Auswahl
-SELECTED_INSTANCE=$(echo "$INSTANCES" | sed -n "${SELECTION}p" | awk '{print $1}')
+    # Aktualisiere den Status der Konfiguration
+    sed -i "s|^CONFIG_STEP=.*|CONFIG_STEP=2|" ./config_files/variables.sh
+    echo "Konfiguration von Instanz 1 abgeschlossen."
 
-# Überprüfen, ob eine Instanz-ID ausgewählt wurde
-if [ -z "$SELECTED_INSTANCE" ]; then
-  echo "Fehler: Ungültige Auswahl."
-  exit 1
-fi
+elif [[ "$CONFIG_STEP" == "2" ]]; then
+    echo "Starte Konfiguration der Elastic IP für Instanz 2 ($INSTANCE_ID2)..."
 
-echo "Ausgewählte Instanz-ID: $SELECTED_INSTANCE"
+    # Neue Elastic IP erstellen
+    NEW_ALLOCATION=$(aws ec2 allocate-address --query "AllocationId" --output text)
 
-# Schritt 3: Verknüpfe die neue Elastic IP mit der Instanz
-echo "Verknüpfe die neue Elastic IP mit der Instanz $SELECTED_INSTANCE..."
-aws ec2 associate-address --instance-id "$SELECTED_INSTANCE" --allocation-id "$NEW_ALLOCATION"
+    if [ -z "$NEW_ALLOCATION" ]; then
+        echo "Fehler: Konnte keine neue Elastic IP erstellen."
+        exit 1
+    fi
 
-# Prüfe, ob die Verknüpfung erfolgreich war
-if [ $? -eq 0 ]; then
-  echo "Die Elastic IP wurde erfolgreich mit der Instanz $SELECTED_INSTANCE verknüpft."
+    echo "Neue Elastic IP erfolgreich erstellt. Zuordnung-ID: $NEW_ALLOCATION"
+
+    # Elastic IP mit Instanz 2 verknüpfen
+    aws ec2 associate-address --instance-id "$INSTANCE_ID2" --allocation-id "$NEW_ALLOCATION"
+
+    # Öffentliche IP der Elastic IP abrufen
+    NEW_PUBLIC_IP=$(aws ec2 describe-addresses --allocation-ids "$NEW_ALLOCATION" --query "Addresses[0].PublicIp" --output text)
+    echo "Die neue öffentliche IP für Instanz 2 lautet: $NEW_PUBLIC_IP"
+
+    # Aktualisiere PUBLIC_IP2 in der Konfigurationsdatei
+    sed -i "s|^PUBLIC_IP2=.*|PUBLIC_IP2=\"$NEW_PUBLIC_IP\"|" ./config_files/variables.sh
+
+    # Aktualisiere den Status der Konfiguration (auf abgeschlossen setzen)
+    sed -i "s|^CONFIG_STEP=.*|CONFIG_STEP=done|" ./config_files/variables.sh
+    echo "Konfiguration von Instanz 2 abgeschlossen."
+
 else
-  echo "Fehler beim Verknüpfen der Elastic IP mit der Instanz."
-  exit 1
+    echo "Alle Elastic IPs wurden bereits konfiguriert. Keine weiteren Schritte erforderlich."
+    exit 0
 fi
-
-# Schritt 4: Zeige die öffentliche IP der neuen Elastic IP an
-NEW_PUBLIC_IP=$(aws ec2 describe-addresses \
-  --allocation-ids "$NEW_ALLOCATION" \
-  --query "Addresses[0].PublicIp" --output text)
-
-echo "Die Elastic IP der Instanz $SELECTED_INSTANCE lautet: $NEW_PUBLIC_IP"
