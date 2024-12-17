@@ -3,7 +3,7 @@ set -e  # Beendet das Skript bei Fehlern
 
 # Variablen definieren
 source ./config_files/variables.sh
-
+FILE_PATH="./config_files/variables.sh"
 # EC2-Instanz(en) suchen und beenden
 echo "Suche EC2-Instanz(en) mit Sicherheitsgruppe $SEC_GROUP_NAME..."
 INSTANCE_IDS=$(aws ec2 describe-instances --filters "Name=instance.group-name,Values=$SEC_GROUP_NAME" \
@@ -63,6 +63,21 @@ for allocation_id in $elastic_ips; do
 done
 
 echo "Alle Ressourcen wurden erfolgreich entfernt."
+
+if [ -f "$FILE_PATH" ]; then
+    rm "$FILE_PATH"
+    echo "Die Datei wurde gelöscht."
+else
+    echo "Die Datei existiert nicht."
+fi
+
+touch "$FILE_PATH"
+
+echo "# Neue Werte für die Variablen" >> "$FILE_PATH"
+echo "SLEEP_DURATION=\"20\"" >> "$FILE_PATH"
+echo "KEY_NAME=\"djs-key\"" >> "$FILE_PATH"
+echo "SEC_GROUP_NAME=\"djs-sec-group\"" >> "$FILE_PATH"
+echo "CONFIG_STEP=1" >> "$FILE_PATH"
 
 # variablen in file schrieben
 echo "KEY_NAME=\"$KEY_NAME\"" >> ./config_files/variables.sh
