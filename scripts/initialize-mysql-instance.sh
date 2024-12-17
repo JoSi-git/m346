@@ -21,7 +21,7 @@ fi
 echo "Starte MySQL EC2-Instanz..."
 export AWS_PAGER=""
 
-$INSTANCE_ID1=$(aws ec2 run-instances \
+INSTANCE_ID1=$(aws ec2 run-instances \
 --image-id ami-08c40ec9ead489470 \
 --count 1 \
 --instance-type t2.micro \
@@ -37,7 +37,7 @@ if [ -z "$INSTANCE_ID1" ]; then
     exit 1
 fi
 
-echo "Gestartete Instanz-ID: $$INSTANCE_ID1"
+echo "Gestartete Instanz-ID: $INSTANCE_ID1"
 
 # Ermittle die Public IP der Instanz
 PUBLIC_IP1=$(aws ec2 describe-instances \
