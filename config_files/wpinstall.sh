@@ -2,7 +2,7 @@
 set -e  # Beendet das Skript bei Fehlern
 
 # Variablen definieren
-source ./config_files/variables.sh
+source /home/ubuntu/variables.sh
 
 # Update die Paketliste
 echo "Updating package list..."

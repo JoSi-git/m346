@@ -60,6 +60,7 @@ echo "Gefundene Public IP: $PUBLIC_IP2"
 echo "Kopiere das wpinstall.sh-Skript auf die Instanz..."
 # Kopiere das Skript auf die Instanz
 scp -i ~/.ssh/djs-key.pem -o StrictHostKeyChecking=accept-new ./config_files/wpinstall.sh ubuntu@"$PUBLIC_IP2":/home/ubuntu/wpinstall.sh
+scp -i ~/.ssh/djs-key.pem -o StrictHostKeyChecking=accept-new ./config_files/variables.sh ubuntu@"$PUBLIC_IP2":/home/ubuntu/variables.sh
 
 # Prüfe, ob der Upload erfolgreich war
 if [ $? -ne 0 ]; then
