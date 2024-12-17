@@ -32,7 +32,7 @@ $INSTANCE_ID1=$(aws ec2 run-instances \
 --output text)
 
 # Prüfe, ob eine Instanz-ID zurückgegeben wurde
-if [ -z "$$INSTANCE_ID1" ]; then
+if [ -z "$INSTANCE_ID1" ]; then
     echo "Fehler: Keine Instanz-ID erhalten."
     exit 1
 fi
@@ -41,7 +41,7 @@ echo "Gestartete Instanz-ID: $$INSTANCE_ID1"
 
 # Ermittle die Public IP der Instanz
 PUBLIC_IP1=$(aws ec2 describe-instances \
---instance-ids "$$INSTANCE_ID1" \
+--instance-ids "$INSTANCE_ID1" \
 --query "Reservations[].Instances[].PublicIpAddress" \
 --output text)
 
