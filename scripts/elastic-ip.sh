@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e  # Beendet das Skript bei Fehlern
 
 # Schritt 1: Erstelle eine neue Elastic IP
 echo "Erstelle eine frische Elastic IP-Adresse..."
