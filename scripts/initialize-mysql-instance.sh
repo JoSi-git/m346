@@ -90,14 +90,6 @@ else
     echo "MySQL-Installation erfolgreich abgeschlossen!"
 fi
 
-# Tabellarische Ausgabe von Instanznummer und IP Addresse
-echo "+------------------------------+------------------------------+"  
-printf "| %-30s | %-30s |\n" "Instanz-ID" "Öffentliche IP"
-echo "+------------------------------+------------------------------+"  
-printf "| %-30s | %-30s |\n" "$INSTANCE_ID1" "$PUBLIC_IP1"
-echo "+------------------------------+------------------------------+"  
-
-
 # variablen in file schrieben
 echo "INSTANCE_ID1=$INSTANCE_ID1" >> ./config_files/variables.sh
 echo "PUBLIC_IP1=\"$PUBLIC_IP1\"" >> ./config_files/variables.sh

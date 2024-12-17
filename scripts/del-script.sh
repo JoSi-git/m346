@@ -64,11 +64,9 @@ for allocation_id in $elastic_ips; do
 done
 
 #Variabeldatei löschen
-echo "Alle Standardvariabeln wurden erfolgreich entfernt."
-
 if [ -f "$FILE_PATH" ]; then
     rm "$FILE_PATH"
-    echo "Die Standardvariabeldatei wurde gelöscht."
+    echo "Alle Standardvariabeln wurden erfolgreich entfernt."
 else
     echo "Die Standardvariabeldatei existiert nicht."
 fi
@@ -79,3 +77,5 @@ echo "SLEEP_DURATION=\"20\"" >> "$FILE_PATH"
 echo "KEY_NAME=\"djs-key\"" >> "$FILE_PATH"
 echo "SEC_GROUP_NAME=\"djs-sec-group\"" >> "$FILE_PATH"
 echo "CONFIG_STEP=1" >> "$FILE_PATH"
+
+echo "Alle Standardvariabeln wurden erfolgreich neu erstellt."

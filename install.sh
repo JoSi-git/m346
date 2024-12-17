@@ -24,6 +24,8 @@ fi
 echo "Konfiguriere Elastic IP für MySQL..."
 ./scripts/elastic-ip.sh
 
+echo "-------------------------------------------------------------------------------------"
+
 # AWS Webserver-Instanz initialisieren
 bash ./scripts/initialize-web-instance.sh
 

@@ -90,13 +90,6 @@ else
     echo "WordPress-Installation erfolgreich abgeschlossen!"
 fi
 
-# Tabellarische Ausgabe von Instanznummer und IP Addresse
-echo "+------------------------------+------------------------------+"  
-printf "| %-30s | %-30s |\n" "Instanz-ID" "Öffentliche IP"
-echo "+------------------------------+------------------------------+"  
-printf "| %-30s | %-30s |\n" "$INSTANCE_ID2" "$PUBLIC_IP2"
-echo "+------------------------------+------------------------------+"  
-
 # variablen in file schrieben
 echo "INSTANCE_ID2=$INSTANCE_ID2" >> ./config_files/variables.sh
 echo "PUBLIC_IP2=\"$PUBLIC_IP2\"" >> ./config_files/variables.sh
