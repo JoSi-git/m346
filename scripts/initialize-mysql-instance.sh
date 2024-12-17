@@ -100,6 +100,6 @@ echo "+------------------------------+------------------------------+"
 
 
 # variablen in file schrieben
-echo "INSTANCE_ID1=\"$INSTANCE_ID1\"" >> ./config_files/variables.sh
+echo "INSTANCE_ID1=$INSTANCE_ID1" >> ./config_files/variables.sh
 echo "PUBLIC_IP1=\"$PUBLIC_IP1\"" >> ./config_files/variables.sh
 echo "MySQL_installation_File=\"$MySQL_installation_File\"" >> ./config_files/variables.sh
