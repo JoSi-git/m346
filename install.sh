@@ -8,28 +8,10 @@ echo "--------------------------------------------------------------------------
 echo "Für alle Anforderungen, Hilfestellungen und Dokumentationen zum Skript, besuchen Sie bitte das Git-Repository unter: https://github.com/JoSi-git/m346."
 echo ""
 
-# Funktion zur Konfiguration der Elastic IP
-configure_elastic_ip() {
-    while true; do
-        read -p "Möchten Sie eine Elastic IP konfigurieren? (j/n): " user_input
-
-        if [[ "$user_input" == "j" || "$user_input" == "J" ]]; then
-            echo "Elastic IP wird konfiguriert..."
-            ./scripts/elastic-ip.sh
-            break
-        elif [[ "$user_input" == "n" || "$user_input" == "N" ]]; then
-            echo "Elastic IP Konfiguration wird beendet."
-            break
-        else
-            echo "Ungültige Eingabe. Bitte nur 'j' oder 'n' eingeben."
-        fi
-    done
-}
-
 # run script für Sicherheitsgruppe und Key Pair
 bash ./scripts/sec-key.sh
 
-# run config, to setup aws ec2 as the MySQL Server
+# AWS MySQL-Instanz initialisieren
 bash ./scripts/initialize-mysql-instance.sh
 
 if [[ $? -ne 0 ]]; then
@@ -39,12 +21,10 @@ if [[ $? -ne 0 ]]; then
 fi
 
 # Elastic IP für MySQL konfigurieren
-configure_elastic_ip
+echo "Konfiguriere Elastic IP für MySQL..."
+./scripts/elastic-ip.sh
 
-# Optische Trennung beider Skripts
-echo "-------------------------------------------------------------------------------------"
-
-# run config, to setup aws ec2 as the Web Server
+# AWS Webserver-Instanz initialisieren
 bash ./scripts/initialize-web-instance.sh
 
 if [[ $? -ne 0 ]]; then
@@ -54,7 +34,8 @@ if [[ $? -ne 0 ]]; then
 fi
 
 # Elastic IP für den Webserver konfigurieren
-configure_elastic_ip
+echo "Konfiguriere Elastic IP für Webserver..."
+./scripts/elastic-ip.sh
 
-# Installation abschließen
-echo "Installation wird abgeschlossen"
+# Installation abschliessen
+echo "Installation abgeschlossen."
