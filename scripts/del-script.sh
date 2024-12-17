@@ -3,7 +3,7 @@ set -e  # Beendet das Skript bei Fehlern
 
 # Variablen definieren
 source ./config_files/variables.sh
-FILE_PATH="./config_files/variables.sh"
+FILE_PATH=./config_files/variables.sh
 # EC2-Instanz(en) suchen und beenden
 echo "Suche EC2-Instanz(en) mit Sicherheitsgruppe $SEC_GROUP_NAME..."
 INSTANCE_IDS=$(aws ec2 describe-instances --filters "Name=instance.group-name,Values=$SEC_GROUP_NAME" \
