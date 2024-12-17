@@ -26,6 +26,9 @@ configure_elastic_ip() {
     done
 }
 
+# run script für Sicherheitsgruppe und Key Pair
+bash ./scripts/sec-key.sh
+
 # run config, to setup aws ec2 as the MySQL Server
 bash ./scripts/initialize-mysql-instance.sh
 
