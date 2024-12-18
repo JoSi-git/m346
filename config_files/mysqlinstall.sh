@@ -1,15 +1,15 @@
 #!/bin/bash
 
 # Variablen für MySQL Konfiguration
+source ./config_files/variables.sh
 MYSQL_ROOT_PASS="root_passwort"
 MYSQL_USER="wp_user"
 MYSQL_USER_PASS="wp_user_passwort"
 MYSQL_DB="wordpress_db"
-MYSQL_HOST="0.0.0.0"  # Zum Zugreifen von allen IP-Adressen
 
 # Update des Systems
 echo "System wird aktualisiert..."
-sudo apt update && sudo apt upgrade -y
+sudo apt update -y
 
 # MySQL installieren (falls nicht bereits installiert)
 echo "MySQL wird installiert..."
@@ -25,7 +25,7 @@ sudo mysql -e "FLUSH PRIVILEGES;"
 
 # MySQL-Server so konfigurieren, dass er von anderen Servern zugänglich ist
 echo "MySQL-Konfiguration anpassen..."
-sudo sed -i "s/^bind-address.*/bind-address = $MYSQL_HOST/" /etc/mysql/mysql.conf.d/mysqld.cnf
+sudo sed -i "s/^bind-address.*/bind-address = $PUBLIC_IP1/" /etc/mysql/mysql.conf.d/mysqld.cnf
 
 # MySQL neu starten, um die Änderungen anzuwenden
 echo "MySQL-Server wird neu gestartet..."
