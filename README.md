@@ -13,8 +13,8 @@ Diese Anleitung beschreibt die Schritte, um eine WordPress-Installation in der A
 ## 📂 Inhaltsverzeichnis
 
 1. [Voraussetzungen](#-voraussetzungen)
-
 2. [Installation](#-installation)
+3. [Repository Struktur](#-repository struktur)
 
 ## ✅ Voraussetzungen
 
@@ -22,9 +22,8 @@ Bevor Sie starten, stellen Sie sicher, dass folgende Anforderungen erfüllt sind
 
 - Ein AWS-Account mit administrativen Berechtigungen.
 
-- AWS CLI ist installiert und konfiguriert.
-
-- Terraform ist installiert (für Infrastructure as Code).
+- AWS CLI ist installiert und konfiguriert. 
+	* Hilfestellung zur Installation und Konfiguration: [GBSSG Gitlab m364](https://gbssg.gitlab.io/m346/iac-aws-cli/)
 
 - Git ist installiert.
 
@@ -37,13 +36,21 @@ Bevor Sie starten, stellen Sie sicher, dass folgende Anforderungen erfüllt sind
 Klonen Sie dieses Repository auf Ihren lokalen Rechner:
 
 ```bash
-
 git clone https://github.com/JoSi-git/m364.git
 
-cd <repository-name>
-
+cd <pfad-zum-repository>
 ```
 
+Ausführberechtigungen anpassen:
+
+```bash
+chmod +x install.sh
+```
+
+Script ausführen:
+```bash
+./install.sh
+```
 ## 📂 Repository Struktur  
 
 ### 🛠️ 1. config_files  
@@ -58,7 +65,7 @@ Es gibt einen Unterordner **`wordpress_files`**, der spezifische Konfigurations-
 
 ---
 
-### ⚙️ 2. scripts  
+### ⚙️ 2. Scripts  
 
 Beinhaltet verschiedene Shell-Skripte zur Automatisierung von Aufgaben. Beispiele sind:  
 
