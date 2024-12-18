@@ -1,11 +1,8 @@
 # WordPress auf AWS – Setup-Anleitung
 
 [![Silas Gubler](https://img.shields.io/badge/Silas_Gubler-FF4500?style=for-the-badge)](https://github.com/arkaizn)
-
 [![David Kästli](https://img.shields.io/badge/David_Kästli-32CD32?style=for-the-badge)](https://github.com/dka-stat)
-
 [![Jonas Sieber](https://img.shields.io/badge/Jonas_Sieber-1E90FF?style=for-the-badge)](https://github.com/josi-git)
-
 [![Lizenz](https://img.shields.io/badge/Lizenz-FFD700?style=for-the-badge)](https://github.com/JoSi-git/m346/blob/main/LICENSE)
 
 
@@ -116,6 +113,8 @@ Unsere Skripts werden hier noch im detail erklärt.
 3. Initialisierung Elastic-IP
 
     * Nachdem der Webserver und der MySQL-Server-Konfiguriert wurde, wird bei bedarf eine Elastic IP hinzugefügt
+    
+---
 
 ### 📜 mysqlinstall.sh  
 
@@ -131,6 +130,8 @@ Unsere Skripts werden hier noch im detail erklärt.
 
     * Startet den MySQL-Dienst, damit die MySQL-Datenbank sofort läuft.
  
+---
+ 
 ### 📝 variables.sh
 
 1. Variablen vergabe:  
@@ -143,6 +144,7 @@ Unsere Skripts werden hier noch im detail erklärt.
 
     * CONFIG_STEP       -> 1                       
  
+---
  
 ### 📜 wpinstall.sh  
 
@@ -161,7 +163,9 @@ Unsere Skripts werden hier noch im detail erklärt.
 4. Apache Status überprüfen
 
     * Status abfrage mit **`sudo systemctl status apache2`**
- 
+
+---
+
 ### 📝  del-script.sh
 
 1. EC2-Instanzen suchen und beenden
@@ -181,7 +185,9 @@ Unsere Skripts werden hier noch im detail erklärt.
 3. Konfigurationsdatei aktualisieren
 
     * Löscht die alte **`ariables.sh-Datei.`** und erstellt sie wieder neu mit den Standardwerten
- 
+
+---
+
 ### 📜 elastic-ip.sh  
 
 1. Automatisierung der Zuweisung von Elastic IPs an AWS EC2-Instanzen
@@ -189,9 +195,11 @@ Unsere Skripts werden hier noch im detail erklärt.
 2. Verhindert redundante Konfigurationen durch den Status **`CONFIG_STEP`**
 
 3. Aktualisiert die Konfigurationsdatei dynamisch, um den Überblick über öffentliche IPs zu behalten
- 
+
+---
+
 ### 📝 initialize-mysql-instance.sh  
- 
+
 1. Prüft Verzeichnis und das MySQL-Installationsskript
 
     * Erstellt das Verzeichnis ~/ec2mysqlserver, falls es nicht existiert.
@@ -202,11 +210,11 @@ Unsere Skripts werden hier noch im detail erklärt.
 
 3. Initialisierung der Instanz abwarten
 
-    * Wartet für die Dauer von **`$SLEEP_DURATION`** die im **`variables.sh`** angegeben ist
+    * Wartet für die Dauer von der **`$SLEEP_DURATION`** dauer die im **`variables.sh`** angegeben ist
 
 4. MySQL-Installationsskript übertragen und ausführen
 
-    * Kopiert die Dateien mysqlinstall.sh und variables.sh via SCP auf die EC2-Instanz.
+    * Kopiert die Dateien **`mysqlinstall.sh`** und **`variables.sh`** via SCP auf die EC2-Instanz.
 
     * Führt das Skript via. SSH auf dem System aus
 
@@ -215,3 +223,37 @@ Unsere Skripts werden hier noch im detail erklärt.
     * Gibt die Instanz-ID und die öffentliche IP-Adresse in einer Tabelle aus.
 
     * Schreibt die ermittelte **`INSTANCE_ID1, PUBLIC_IP1 und MySQL_installation_File`** in die Datei **`variables.sh.`**
+
+---
+
+### 📜 initialize-web-instance.sh  
+
+1. Verzeichnis erstellen und WordPress-Installationsskript prüfen
+    * Erstellt das Verzeichnis **`~/ec2webserver`**, falls es nicht existiert.
+    * Überprüft, ob die Datei wpinstall.sh im Verzeichnis **`./config_files/`** existiert.  
+
+2. EC2-Instanz starten und die IP der Instanz ermitteln
+    * Holt die Public IP der gestarteten Instanz.
+
+3. Initialisierung der Instanz abwarten
+
+    * Wartet für die Dauer von der **`$SLEEP_DURATION`** dauer die im **`variables.sh`** angegeben ist
+
+4. Web-Installationsskript übertragen und ausführen
+
+    * Kopiert die Dateien **`mysqlinstall.sh`** und **`variables.sh`** via SCP auf die EC2-Instanz.
+
+5. Ausgabe der Instanzinformationen und Aktualisieren der Konfigurationsdatei
+
+    * Gibt die Instanz-ID und die öffentliche IP-Adresse in einer Tabelle aus.
+
+    * Schreibt die ermittelte **`INSTANCE_ID2, PUBLIC_IP2`** und **`Wordpress_installation_File`** in die Datei **`variables.sh.`**
+
+---
+
+### 📝 sec-key.sh
+
+1. Key Pair erstellung und abspeicherung
+    * Generiert ein neues Key Pair, falls es nicht existiert, und speichert es lokal für die Nutzung mit EC2-Instanzen.
+2. Sicherheitsgruppen konfiguration und erstellung
+    * Erstellt eine Sicherheitsgruppe mit HTTP- und SSH-Zugriffsregeln, falls diese nicht vorhanden ist.
