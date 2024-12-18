@@ -247,7 +247,7 @@ Unsere Skripts werden hier noch im detail erklärt.
 
     * Gibt die Instanz-ID und die öffentliche IP-Adresse in einer Tabelle aus.
 
-    * Schreibt die ermittelte **`INSTANCE_ID2, PUBLIC_IP2 und Wordpress_installation_File`** in die Datei **`variables.sh.`**
+    * Schreibt die ermittelte **`INSTANCE_ID2, PUBLIC_IP2`** und **`Wordpress_installation_File`** in die Datei **`variables.sh.`**
 
 ---
 
