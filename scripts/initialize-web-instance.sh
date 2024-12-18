@@ -77,7 +77,7 @@ ssh -i ~/.ssh/$KEY_NAME.pem -o StrictHostKeyChecking=accept-new ubuntu@"$PUBLIC_
     echo "Setze Berechtigungen für wpinstall.sh.."
     chmod +x /home/ubuntu/wpinstall.sh
     echo "Starte die Ausführung von wpinstall.sh..."
-    /home/ubuntu/wpinstall.sh
+    sudo bash /home/ubuntu/wpinstall.sh
 EOF
 
 echo "-------------------------------------------------------------------------------------"
