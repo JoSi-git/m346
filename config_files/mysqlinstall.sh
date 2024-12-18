@@ -2,9 +2,7 @@
 set -e
 
 # variables
-DB_NAME="wordpress"
-DB_USER="wp-user"
-DB_PASSWORD="Riethuesli>12345"
+source /home/ubuntu/variables.sh
 
 # Install MySQL Server
 apt update -y
