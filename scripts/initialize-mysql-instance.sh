@@ -77,7 +77,7 @@ ssh -i ~/.ssh/$KEY_NAME.pem -o StrictHostKeyChecking=accept-new ubuntu@"$PUBLIC_
     echo "Setze Berechtigungen für mysqlinstall.sh.."
     chmod +x /home/ubuntu/mysqlinstall.sh
     echo "Starte die Ausführung von mysqlinstall.sh..."
-    /home/ubuntu/mysqlinstall.sh
+    sudo bash /home/ubuntu/mysqlinstall.sh
 EOF
 
 echo "-------------------------------------------------------------------------------------"
