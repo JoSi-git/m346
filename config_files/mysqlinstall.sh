@@ -15,9 +15,6 @@ MYSQL_ROOT_PASSWORD="Riethuesli>12345"
 MYSQL_WP_USER="wpadmin"
 MYSQL_WP_ADMIN_USER_PASSWORD="Riethuesli>12345"
 
-# MySQL Sicherung und Konfiguration
-mysql_secure_installation -u root --password="${MYSQL_ROOT_PASSWORD}" --use-default
-
 # MySQL Benutzer und Datenbank erstellen
 mysql -u root --password="${MYSQL_ROOT_PASSWORD}" <<EOF
 CREATE DATABASE IF NOT EXISTS wordpress;
