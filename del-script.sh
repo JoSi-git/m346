@@ -5,6 +5,10 @@ set -e  # Beendet das Skript bei Fehlern
 source ./config_files/variables.sh
 FILE_PATH="./config_files/variables.sh"
 
+echo ""
+echo -e "\e[1mAlle Instanzen, Sicherheitsgruppen und Elastic IPs werden vollständig entfernt!\e[0m"
+echo "-----------------------------------------------------------------------------------------------------------------------------------------------------"
+
 # EC2-Instanz(en) suchen und beenden
 echo "Suche EC2-Instanz(en) mit Sicherheitsgruppe $SEC_GROUP_NAME..."
 INSTANCE_IDS=$(aws ec2 describe-instances --filters "Name=instance.group-name,Values=$SEC_GROUP_NAME" \
@@ -39,17 +43,14 @@ else
 fi
 
 # Elastic IPs löschen
+echo "Lösche verwendete Elastic IPs $elastic_ips..."
 
 # Alle Elastic IPs abrufen und als Text anzeigen
 elastic_ips=$(aws ec2 describe-addresses --query 'Addresses[*].[AllocationId]' --output text)
 
 # Überprüfen, ob Elastic IPs vorhanden sind
 if [ -z "$elastic_ips" ]; then
-    echo "Keine Elastic IPs gefunden."
-    exit 1
-else
-    echo "Gefundene Elastic IPs:"
-    echo "$elastic_ips"
+    echo "Keine verwendeten Elastic IPs gefunden."
 fi
 
 # Jede Elastic IP freigeben
@@ -57,7 +58,7 @@ for allocation_id in $elastic_ips; do
     echo "Freigeben der Elastic IP mit Allocation-ID: $allocation_id"
     aws ec2 release-address --allocation-id $allocation_id
     if [ $? -eq 0 ]; then
-        echo "Elastic IP erfolgreich freigegeben."
+        echo "Elastic IPs erfolgreich freigegeben."
     else
         echo "Fehler beim Freigeben der Elastic IP mit Allocation-ID: $allocation_id"
     fi
@@ -66,7 +67,7 @@ done
 #Variabeldatei löschen
 if [ -f "$FILE_PATH" ]; then
     rm "$FILE_PATH"
-    echo "Alle Standardvariabeln wurden erfolgreich entfernt."
+    echo "Variabeln werden bereinigt..."
 else
     echo "Die Standardvariabeldatei existiert nicht."
 fi
@@ -81,5 +82,5 @@ echo "DB_NAME="wordpress"" >> "$FILE_PATH"
 echo "DB_USER="wp-user"" >> "$FILE_PATH"
 echo "DB_PASSWORD=Riethuesli2024_DJS" >> "$FILE_PATH"
 
-
 echo "Alle Standardvariabeln wurden erfolgreich neu erstellt."
+echo "-----------------------------------------------------------------------------------------------------------------------------------------------------"

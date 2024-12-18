@@ -1,7 +1,13 @@
 SLEEP_DURATION="20"
 KEY_NAME="djs-key"
 SEC_GROUP_NAME="djs-sec-group"
-CONFIG_STEP=1
+CONFIG_STEP=done
 DB_NAME=wordpress
 DB_USER=wp-user
 DB_PASSWORD=Riethuesli2024_DJS
+INSTANCE_ID1=i-0667eef4a2dfff695
+PUBLIC_IP1="98.83.100.18"
+MySQL_installation_File="./config_files/mysqlinstall.sh"
+INSTANCE_ID2=i-03fa533cb314f0222
+PUBLIC_IP2="52.207.48.175"
+Wordpress_installation_File="./config_files/wpinstall.sh"
