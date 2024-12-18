@@ -30,6 +30,7 @@ fi
 echo "Konfiguriere Elastic IP für MySQL..."
 ./scripts/elastic-ip.sh
 
+echo ""
 echo "-----------------------------------------------------------------------------------------------------------------------------------------------------"
 
 # AWS Webserver-Instanz initialisieren

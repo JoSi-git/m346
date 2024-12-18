@@ -34,9 +34,9 @@ if [[ "$CONFIG_STEP" == "1" ]]; then
 
     # Tabellarische Ausgabe von Instanznummer und IP Addresse
     echo "+------------------------------+------------------------------+"  
-    printf "| %-30s | %-30s |\n" "Instanz-ID" "Öffentliche IP"
-    echo "+------------------------------+------------------------------+"  
-    printf "| %-30s | %-30s |\n" "$INSTANCE_ID1" "$PUBLIC_IP1"
+    echo "|           Instanz-ID         |        Öffentliche IP        |"
+    echo "+------------------------------+------------------------------+"
+    echo "|     "$INSTANCE_ID1"      |       "$PUBLIC_IP1"        |"
     echo "+------------------------------+------------------------------+"  
 
 elif [[ "$CONFIG_STEP" == "2" ]]; then
@@ -72,9 +72,9 @@ elif [[ "$CONFIG_STEP" == "2" ]]; then
     echo ""
     echo -e "\e[1mMit den folgenden Daten kann auf die fertige WordPress-Instanz zugegriffen werden:\e[0m"
     echo "+------------------------------+------------------------------+"  
-    printf "| %-30s | %-30s |\n" "Instanz-ID" "Öffentliche IP"
-    echo "+------------------------------+------------------------------+"  
-    printf "| %-30s | %-30s |\n" "$INSTANCE_ID2" "$NEW_PUBLIC_IP"
+    echo "|           Instanz-ID         |        Öffentliche IP        |"
+    echo "+------------------------------+------------------------------+"
+    echo "|     "$INSTANCE_ID2"      |       "$PUBLIC_IP2"        |"
     echo "+------------------------------+------------------------------+"  
 
 else

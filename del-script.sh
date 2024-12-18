@@ -79,7 +79,7 @@ echo "SEC_GROUP_NAME=\"djs-sec-group\"" >> "$FILE_PATH"
 echo "CONFIG_STEP=1" >> "$FILE_PATH"
 echo "DB_NAME="wordpress"" >> "$FILE_PATH"
 echo "DB_USER="wp-user"" >> "$FILE_PATH"
-echo "DB_PASSWORD=Riethuesli>12345" >> "$FILE_PATH"
+echo "DB_PASSWORD=Riethuesli2024_DJS" >> "$FILE_PATH"
 
 
 echo "Alle Standardvariabeln wurden erfolgreich neu erstellt."

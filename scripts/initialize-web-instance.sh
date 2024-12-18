@@ -69,7 +69,7 @@ if [ $? -ne 0 ]; then
 fi
 
 # SSH-Konfigurationsabschnitt
-echo "-------------------------------------------------------------------------------------"
+echo "-----------------------------------------------------------------------------------------------------------------------------------------------------"
 
 # Führe das WordPress-Installationsskript auf der Instanz aus
 echo "Führe das WordPress-Installationsskript auf der Instanz aus..."
@@ -80,7 +80,7 @@ ssh -i ~/.ssh/$KEY_NAME.pem -o StrictHostKeyChecking=accept-new ubuntu@"$PUBLIC_
     sudo bash /home/ubuntu/wpinstall.sh
 EOF
 
-echo "-------------------------------------------------------------------------------------"
+echo "-----------------------------------------------------------------------------------------------------------------------------------------------------"
 
 # Prüfe, ob die Ausführung erfolgreich war
 if [ $? -ne 0 ]; then
