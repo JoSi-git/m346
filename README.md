@@ -14,7 +14,7 @@ Diese Anleitung beschreibt die Schritte, um eine WordPress-Installation in der A
 
 1. [Voraussetzungen](#-voraussetzungen)
 2. [Installation](#-installation)
-3. [Repository Struktur](#-repository struktur)
+3. [Repository Struktur](#-repository-struktur)
 
 ## ✅ Voraussetzungen
 
