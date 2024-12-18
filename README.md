@@ -14,7 +14,7 @@ Diese Anleitung beschreibt die Schritte, um eine WordPress-Installation in der A
 
 1. [Voraussetzungen](#-voraussetzungen)
 2. [Installation](#-installation)
-3. [Repository Struktur](#-Repository Struktur )
+3. [Repository Struktur](#-repository struktur )
 
 ## ✅ Voraussetzungen
 
@@ -23,7 +23,7 @@ Bevor Sie starten, stellen Sie sicher, dass folgende Anforderungen erfüllt sind
 - Ein AWS-Account mit administrativen Berechtigungen.
 
 - AWS CLI ist installiert und konfiguriert. 
-	-Hilfestellung zur Installation und Konfiguration: [GBSSG Gitlab m364](https://gbssg.gitlab.io/m346/iac-aws-cli/)
+	* Hilfestellung zur Installation und Konfiguration: [GBSSG Gitlab m364](https://gbssg.gitlab.io/m346/iac-aws-cli/)
 
 - Git ist installiert.
 
