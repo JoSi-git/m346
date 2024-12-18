@@ -7,9 +7,12 @@ source /home/ubuntu/variables.sh
 # Update die Paketliste
 echo "Updating package list..."
 sudo apt update -y
+sudo apt install mysql-server -y
 
 # MySQL Root Passwort und wpadmin Passwort
+MYSQL_USER="root"
 MYSQL_ROOT_PASSWORD="Riethuesli>12345"
+MYSQL_WP_USER="wpadmin"
 MYSQL_WP_ADMIN_USER_PASSWORD="Riethuesli>12345"
 
 # MySQL Sicherung und Konfiguration
@@ -24,5 +27,5 @@ FLUSH PRIVILEGES;
 EOF
 
 # Konfiguration für Remote-Verbindungen
-echo "bind-address = 0.0.0.0" >> /etc/mysql/mysql.conf.d/mysqld.cnf
-service mysql restart
+echo "bind-address = $PUBLIC_IP1" >> /etc/mysql/mysql.conf.d/mysqld.cnf
+sudo systemctl restart mysql.service
