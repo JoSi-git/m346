@@ -19,7 +19,9 @@ echo "Erstelle Sicherheitsgruppe..."
 if ! aws ec2 describe-security-groups --group-names $SEC_GROUP_NAME &>/dev/null; then
     aws ec2 create-security-group --group-name $SEC_GROUP_NAME --description "EC2-Webserver-DJS"
     aws ec2 authorize-security-group-ingress --group-name $SEC_GROUP_NAME --protocol tcp --port 80 --cidr 0.0.0.0/0
+    aws ec2 authorize-security-group-ingress --group-name $SEC_GROUP_NAME --protocol tcp --port 443 --cidr 0.0.0.0/0
     aws ec2 authorize-security-group-ingress --group-name $SEC_GROUP_NAME --protocol tcp --port 22 --cidr 0.0.0.0/0
+    aws ec2 authorize-security-group-ingress --group-name $SEC_GROUP_NAME --protocol tcp --port 3306 --cidr 0.0.0.0/0
 else
     echo "Sicherheitsgruppe $SEC_GROUP_NAME existiert bereits."
 fi
