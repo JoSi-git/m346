@@ -36,7 +36,7 @@ Bevor Sie starten, stellen Sie sicher, dass folgende Anforderungen erfüllt sind
 Klonen Sie dieses Repository auf Ihren lokalen Rechner:
 
 ```bash
-git clone https://github.com/JoSi-git/m364.git
+git clone https://github.com/JoSi-git/m346.git
 
 cd <pfad-zum-repository>
 ```
