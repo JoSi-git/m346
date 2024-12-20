@@ -264,8 +264,71 @@ Unsere Skripts werden hier noch im detail erklärt.
     * Erstellt eine Sicherheitsgruppe mit HTTP- und SSH-Zugriffsregeln, falls diese nicht vorhanden ist.
  
 ## 🚀 Testfälle
-Silas maybe maybe?
+
+### Test 1: Installation und Konfiguration der WordPress-Instanz
+
+Testzeitpunkt: 15:15 Freitag 20/12/24
+
+Testperson: Silas
+
+Spezifische Informationen: Die AWS-Instanz wurde mit den Standard-WordPress-Einstellungen konfiguriert.
+
+Testergebnisse: 
+
+Ergebnis: Die WordPress-Instanz wurde erfolgreich installiert.
+
+Screenshots:
+    
+![alt text](images/image1.png)
+    
+Fazit: Die Installation verlief wie erwartet, ohne Fehler. 
+
+Empfehlung: Sicherstellen, dass alle Sicherheitsupdates vor der Produktivsetzung angewendet werden.
  
+### Test 2: Verbindung zwischen WordPress und MySQL-Server
+
+Testzeitpunkt: 15:39 Freitag 20/12/24
+
+Testperson: Silas
+
+Spezifische Informationen: Die MySQL-Datenbank wurde mit den in der Variablen-Datei angegebenen Werten konfiguriert.
+
+Testergebnisse:
+
+Ergebnis: Die Verbindung zwischen WordPress und MySQL war stabil und konnte ohne probleme eingerichtet werden.
+
+Screenshots:
+
+![alt text](images/image2.png)
+
+Fazit: Die Verbindung funktioniert einwandfrei, es gab keine Verbindungsabbrüche. Links sieht man auch die posts mit mysqlworkbench.
+        
+Empfehlung: Regelmäßige Backups der MySQL-Datenbank erstellen, um Datenverlust zu vermeiden.
+
+### Test 3: Funktionalität des WordPress-Logins
+
+Testzeitpunkt: 15:54 Freitag 20/12/24
+
+Testperson: Silas
+
+Spezifische Informationen: Test der WordPress-Login-Funktion mit einem Admin-Benutzer, um sicherzustellen, dass der Zugriff korrekt funktioniert.
+    
+Testergebnisse:
+
+Ergebnis: Der Login war erfolgreich, der Admin-Bereich konnte ohne Probleme aufgerufen werden.
+
+Screenshots: 
+
+![alt text](images/image3.png)
+
+![alt text](images/image4.png)
+
+![alt text](images/image5.png)
+
+Fazit: Die Login-Funktion von WordPress funktioniert wie erwartet.
+
+Empfehlung: Keine weiteren Maßnahmen erforderlich, da der Test erfolgreich war.
+
 ## ❓ FAQ
 (von Jonas:  
 ##Bei Problemen: aws zugangskonfiguration überprüfen del-script.sh ausführen  
@@ -284,3 +347,5 @@ Ich bin sehr zufrieden mit unserem Endprodukt. Es spiegelt die harte Arbeit und 
  
 ### ✨ [Silas Gubler](https://github.com/arkaizn "Silas Gubler's GitHub Profile")
  
+ Ich fand es echt spannend, im Projekt mit der zentralen Speicherung von Variablen zu arbeiten. Dadurch war es viel einfacher, einheitliche Werte in allen Scripts zu nutzen, was die ganze Arbeit effizienter gemacht hat. Besonders cool war, dass wir die Instanzen auf AWS so anpassen konnten, dass sie gut miteinander zusammenarbeiteten.
+Die Herausforderungen lagen vor allem in der Synchronisation der IaC-Dateien und der Sicherheit. Aber durch gutes Teamwork haben wir das gut hinbekommen. Insgesamt habe ich viel gelernt, vor allem über Cloud-Management und Automatisierung, und bin zufrieden mit dem Ergebnis.
