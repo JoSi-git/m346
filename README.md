@@ -6,11 +6,11 @@
 [![Lizenz](https://img.shields.io/badge/Lizenz-FFD700?style=for-the-badge)](https://github.com/JoSi-git/m346/blob/main/LICENSE)
  
  
-## 📜 Überblick
+# 📜 Überblick
  
 Diese Anleitung beschreibt die Schritte, um eine WordPress-Installation in der Amazon Web Services (AWS) Cloud bereitzustellen. Alle notwendigen Konfigurationsdateien und Skripte befinden sich in diesem Repository. Folgen Sie den untenstehenden Schritten, um die Installation nachzustellen.
  
-## 📂 Inhaltsverzeichnis
+# 📂 Inhaltsverzeichnis
  
 1. [Voraussetzungen](#-voraussetzungen)
 2. [Installation](#-installation)
@@ -20,7 +20,7 @@ Diese Anleitung beschreibt die Schritte, um eine WordPress-Installation in der A
 6. [FAQ](#-faq)
 7. [Reflexion](#-reflexion)
  
-## ✅ Voraussetzungen
+# ✅ Voraussetzungen
  
 Bevor Sie starten, stellen Sie sicher, dass folgende Anforderungen erfüllt sind:
  
@@ -33,7 +33,7 @@ Bevor Sie starten, stellen Sie sicher, dass folgende Anforderungen erfüllt sind
  
 - Ein Webbrowser für den Zugriff auf die WordPress-Seite.
  
-## 🚀 Installation
+# 🚀 Installation
  
 ### 1. Repository klonen
  
@@ -56,7 +56,7 @@ Script ausführen:
 ```bash
 ./install.sh
 ```
-## 📂 Repository Struktur  
+# 📂 Repository Struktur  
  
 ### 🛠️ 1. Ordner config_files  
  
@@ -99,7 +99,7 @@ Beinhaltet verschiedene Shell-Skripte zur Automatisierung von Aufgaben. Beispiel
  
 - Eine Markdown-Datei, die normalerweise eine Erklärung des Projekts, der Struktur und der Verwendung enthält.  
  
-## 📜 Skript erklärungen  
+# 📜 Skript erklärungen  
  
 Unsere Skripts werden hier noch im detail erklärt.
  
@@ -259,7 +259,7 @@ Unsere Skripts werden hier noch im detail erklärt.
 2. Sicherheitsgruppen konfiguration und erstellung
     * Erstellt eine Sicherheitsgruppe mit HTTP- und SSH-Zugriffsregeln, falls diese nicht vorhanden ist.
  
-## 🚀 Testfälle
+# 🚀 Testfälle
 
 ### Test 1: Installation und Konfiguration der WordPress-Instanz
 
@@ -332,19 +332,66 @@ Ergebnis: Der Login war erfolgreich, der Admin-Bereich konnte ohne Probleme aufg
 
 **Empfehlung:** Keine weiteren Maßnahmen erforderlich, da der Test erfolgreich war.
 
-## ❓ FAQ
-##Bei Problemen: aws zugangskonfiguration überprüfen del-script.sh ausführen  
-##Bei Problemen mit dem SSH Key manuel den SSH Key löschen)
- 
+# ❓ FAQ
+## Problem: AWS Zugriff wird abgebrochen
+
+**Fehlermeldung:**
+ ```bash #Fehlermeldung Zugriffsfehler
+An error occurred (UnauthorizedOperation) when calling the CreateSecurityGroup operation: You are not authorized to perform this operation. 
+```
+
+**Problemlösung**:
+
+Das Problem tritt dann auf wen AWS (Learner Lab) ist nicht gestartet oder die AWS Cli Crednetials sind falsch oder abgelaufen sind.
+- AWS Starten und die Credentials aktualliseren
+- optional: Delete script ausführen um altresten zu bereinigen
+
+---
+## Problem:  Ungültiger SSH-Key
+
+**Fehlermeldung:**
+ ```bash #Fehlermeldung Ungültiger SSH-Key
+An error occurred (InvalidKeyPair.NotFound) when calling the RunInstances operation: The key pair 'djs-key' does not exist
+
+```
+
+**Problemlösung**:
+
+Das Problem tritt dann auf wen weder Install noch uninstall Script den bestehenden Key erkennen und diesen weder ändern noch löschen können.
+- Key Manuel aus dem verzeichnis ***~/.ssh*** löschen
+
+---
+## Problem: Fehler beim kopieren von Scripts auf die Instanz
+
+**Fehlermeldung:**
+ ```bash #Fehlermeldung Ungültiger SSH-Key
+ssh: connect to host 184.73.13.156 port 22: Connection refused scp: Connection closed
+
+ssh: connect to host 184.73.13.156 port 22: Connection refused scp: Connection Timed out
+```
+
+**Problemlösung**:
+
+AWS mindert bei hohem Aufkommen die Ressourcen des Learner Lab. Dies führt dazu, dass Latenzen extrem unterschiedlich sind. Da dies auch als Nutzer nicht beeinflusst werden kann, gibt es eine Workaround-Variable.
+
+Die Variable **SLEEP_DURATION="20"** in der Datei **variables.sh** definiert die Länge, in der das Script wartet, bis die Instanz hochgefahren ist. Diese ist standardmässig auf 20 Sekunden eingestellt, kann aber für folgende Situationen angepasst werden:
+
+**Connection refused scp: Connection closed:** Sekundenzahl erhöhen 
+
+**Connection refused scp: Connection Timed out:** Sekundenzahl reduzieren
+
 ## 📖 Reflexion 
 ### 💡 [Jonas Sieber](https://github.com/josi-git "Jonas Sieber's GitHub Profile")
 
+Ich habe das Projekt als sehr lehrreich empfunden, besonders die Arbeit mit Git war für mich ein echtes Highlight. Ich fand es spannend, mehr über die verschiedenen Funktionen zu lernen und sie direkt im Team anzuwenden. Vor dem Projekt war das Thema Cloud für mich schwer greifbar, und ich hatte überhaupt keinen Ansatz für die praktische Umsetzung. Durch dieses Projekt hat sich das jedoch stark geändert, und ich konnte die Vorteile der Cloud besser verstehen und schätzen lernen.
+
+Auch die Erstellung der Dokumentation in Markdown hat mir gut gefallen. Es war eine neue Erfahrung, die mir gezeigt hat, wie nützlich und vielseitig Markdown ist. Insgesamt bin ich froh, dass wir die Möglichkeit hatten, so viele interessante Themen zu bearbeiten und dabei viel zu lernen.
 
 ### 💭 [David Kästli](https://github.com/dka-stat "David Kästli's GitHub Profile")
  
-Dieses Projekt war eine sehr bereichernde Erfahrung. Wir hatten die Gelegenheit, uns intensiv mit Themen wie Git und WordPress auseinanderzusetzen und dabei sowohl technische als auch methodische Fähigkeiten zu erweitern. Besonders wertvoll war die Teamarbeit:  
-Gemeinsam haben wir neues Wissen aufgebaut, Herausforderungen gemeistert und voneinander gelernt.  
-Ich bin sehr zufrieden mit unserem Endprodukt. Es spiegelt die harte Arbeit und den Einsatz wider, den wir investiert haben.
+Dieses Projekt war eine sehr bereichernde Erfahrung. Wir hatten die Gelegenheit, uns intensiv mit Themen wie Git und WordPress auseinanderzusetzen und dabei sowohl technische als auch methodische Fähigkeiten zu erweitern. Besonders wertvoll war die
+Teamarbeit:
+Gemeinsam haben wir neues Wissen aufgebaut, Herausforderungen gemeistert und voneinander gelernt. Ich bin sehr zufrieden mit unserem Endprodukt. Es spiegelt die harte Arbeit und den Einsatz wider, den wir investiert haben.
  
 ### ✨ [Silas Gubler](https://github.com/arkaizn "Silas Gubler's GitHub Profile")
  
