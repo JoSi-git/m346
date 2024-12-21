@@ -50,18 +50,17 @@ Ausführberechtigungen anpassen:
 ```bash
 chmod +x install.sh
 ```
-das holz
+
 Script ausführen:
+
 ```bash
 ./install.sh
 ```
 ## 📂 Repository Struktur  
  
-### 🛠️ 1. config_files  
+### 🛠️ 1. Ordner config_files  
  
-Enthält Konfigurationsdateien, die für Dienste und Anwendungen wie WordPress benötigt werden.  
- 
-Es gibt einen Unterordner **`wordpress_files`**, der spezifische Konfigurations- oder Installationsskripte für WordPress enthält:  
+Beinhaltet folgende Bash-Skripte zur Automatisierung von Aufgaben:
  
 - **mysqlinstall.sh:** Skript zur Installation/Konfiguration von MySQL.  
  
@@ -69,11 +68,9 @@ Es gibt einen Unterordner **`wordpress_files`**, der spezifische Konfigurations-
  
 ---
  
-### ⚙️ 2. Scripts  
+### ⚙️ 2. Ordner Scripts  
  
 Beinhaltet verschiedene Shell-Skripte zur Automatisierung von Aufgaben. Beispiele sind:  
- 
-- **del-script.sh:** Ein Skript zum Löschen von Dateien und Ressourcen.  
  
 - **elastic-ip.sh:** Bezieht sich auf die Verwaltung einer Elastic IP.  
  
@@ -81,16 +78,15 @@ Beinhaltet verschiedene Shell-Skripte zur Automatisierung von Aufgaben. Beispiel
  
 ---
  
-### 🚀 3. install.sh  
- 
-Ein zentrales Installationsskript, das mehrere der oben genannten Skripte zusammenführt und ausführt.  
+### 🚀 3. install.sh  / uninstall.sh
+
+- **install.sh:** Ein zentrales Installationsskript, das mehrere der oben genannten Skripte zusammenführt und ausführt.
+
+- **uninstall.sh:** Ein Skript zum Löschen aller Instanzen, Dateien und Ressourcen.  
  
 ---
  
 ### 🔧 4. Dokumentation und Verwaltungsdateien  
- 
-Hier sind die restlichen Standarddateien aufgelistet und Beschrieben:  
- 
 #### 🚫 .gitignore  
  
 - Eine Datei zur Angabe von Dateien und Ordnern, die nicht in das Git-Repository aufgenommen werden sollen.  
@@ -267,78 +263,83 @@ Unsere Skripts werden hier noch im detail erklärt.
 
 ### Test 1: Installation und Konfiguration der WordPress-Instanz
 
-Testzeitpunkt: 15:15 Freitag 20/12/24
+**Testzeitpunkt:** 15:15 Freitag 20/12/24
 
-Testperson: Silas
+**Testperson:** Silas Gubler
 
-Spezifische Informationen: Die AWS-Instanz wurde mit den Standard-WordPress-Einstellungen konfiguriert.
+**Spezifische Informationen:** Die AWS-Instanz wurde mit den Standard-WordPress-Einstellungen konfiguriert.
 
-Testergebnisse: 
+#### Testergebnisse: 
 
-Ergebnis: Die WordPress-Instanz wurde erfolgreich installiert.
+**Ergebnis :** Die WordPress-Instanz wurde erfolgreich installiert.
 
-Screenshots:
-    
+**Screenshot:**
+
 ![alt text](images/image1.png)
-    
-Fazit: Die Installation verlief wie erwartet, ohne Fehler. 
+*Abbildung 1: Wordpress Dashboardkonfiguration*
 
-Empfehlung: Sicherstellen, dass alle Sicherheitsupdates vor der Produktivsetzung angewendet werden.
+**Fazit:** Die Installation verlief wie erwartet, ohne Fehler. 
+
+**Empfehlung:** Sicherstellen, dass alle Sicherheitsupdates vor der Produktivsetzung angewendet werden.
  
 ### Test 2: Verbindung zwischen WordPress und MySQL-Server
 
-Testzeitpunkt: 15:39 Freitag 20/12/24
+**Testzeitpunkt:** 15:39 Freitag 20/12/24
 
-Testperson: Silas
+**Testperson:** Silas
 
-Spezifische Informationen: Die MySQL-Datenbank wurde mit den in der Variablen-Datei angegebenen Werten konfiguriert.
+**Spezifische Informationen:** Die MySQL-Datenbank wurde mit den in der Variablen-Datei angegebenen Werten konfiguriert.
 
-Testergebnisse:
+**Testergebnisse:**
 
-Ergebnis: Die Verbindung zwischen WordPress und MySQL war stabil und konnte ohne probleme eingerichtet werden.
+**Ergebnis:** Die Verbindung zwischen WordPress und MySQL war stabil und konnte ohne probleme eingerichtet werden.
 
-Screenshots:
+**Screenshot:**
 
 ![alt text](images/image2.png)
+*Abbildung 2:*
 
-Fazit: Die Verbindung funktioniert einwandfrei, es gab keine Verbindungsabbrüche. Links sieht man auch die posts mit mysqlworkbench.
+**Fazit:** Die Verbindung funktioniert einwandfrei, es gab keine Verbindungsabbrüche. Links sieht man auch die posts mit mysqlworkbench.
         
-Empfehlung: Regelmäßige Backups der MySQL-Datenbank erstellen, um Datenverlust zu vermeiden.
+**Empfehlung:** Regelmäßige Backups der MySQL-Datenbank erstellen, um Datenverlust zu vermeiden.
 
 ### Test 3: Funktionalität des WordPress-Logins
 
-Testzeitpunkt: 15:54 Freitag 20/12/24
+**Testzeitpunkt:** 15:54 Freitag 20/12/24
 
-Testperson: Silas
+**Testperson:** Silas
 
-Spezifische Informationen: Test der WordPress-Login-Funktion mit einem Admin-Benutzer, um sicherzustellen, dass der Zugriff korrekt funktioniert.
+**Spezifische Informationen:** Test der WordPress-Login-Funktion mit einem Admin-Benutzer, um sicherzustellen, dass der Zugriff korrekt funktioniert.
     
-Testergebnisse:
+**Testergebnisse:**
 
 Ergebnis: Der Login war erfolgreich, der Admin-Bereich konnte ohne Probleme aufgerufen werden.
 
-Screenshots: 
-
+**Screenshots: 
 ![alt text](images/image3.png)
+
+*Abbildung 1: Wordpress Dashboardkonfiguration*
 
 ![alt text](images/image4.png)
 
+*Abbildung 1: Wordpress Dashboardkonfiguration*
+
 ![alt text](images/image5.png)
 
-Fazit: Die Login-Funktion von WordPress funktioniert wie erwartet.
+*Abbildung 1: Wordpress Dashboardkonfiguration*
 
-Empfehlung: Keine weiteren Maßnahmen erforderlich, da der Test erfolgreich war.
+**Fazit:** Die Login-Funktion von WordPress funktioniert wie erwartet.
+
+**Empfehlung:** Keine weiteren Maßnahmen erforderlich, da der Test erfolgreich war.
 
 ## ❓ FAQ
-(von Jonas:  
 ##Bei Problemen: aws zugangskonfiguration überprüfen del-script.sh ausführen  
 ##Bei Problemen mit dem SSH Key manuel den SSH Key löschen)
  
-## 📖 Reflexion
-Hier in diesem letzten Teil werden wir noch unsere Reflexionen anbringen.
- 
+## 📖 Reflexion 
 ### 💡 [Jonas Sieber](https://github.com/josi-git "Jonas Sieber's GitHub Profile")
- 
+
+
 ### 💭 [David Kästli](https://github.com/dka-stat "David Kästli's GitHub Profile")
  
 Dieses Projekt war eine sehr bereichernde Erfahrung. Wir hatten die Gelegenheit, uns intensiv mit Themen wie Git und WordPress auseinanderzusetzen und dabei sowohl technische als auch methodische Fähigkeiten zu erweitern. Besonders wertvoll war die Teamarbeit:  
