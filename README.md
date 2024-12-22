@@ -8,7 +8,7 @@
  
 ## 📜 Überblick
  
-Diese Anleitung beschreibt die Schritte, um eine WordPress-Installation in der Amazon Web Services (AWS) Cloud bereitzustellen. Alle notwendigen Konfigurationsdateien und Skripte befinden sich in diesem Repository. Folgen Sie den untenstehenden Schritten, um die Installation nachzustellen.
+Diese Anleitung beschreibt die Schritte, um eine WordPress-Installation in der Amazon Web Services (AWS) Cloud bereitzustellen. Alle notwendigen Konfigurationsdateien und Skripte befinden sich in diesem Repository. Mithilfe den unterstehenden Schritten, kann die Installation komplett nachgestellt werden.
  
 ## 📂 Inhaltsverzeichnis
  
@@ -32,7 +32,7 @@ Bevor Sie starten, stellen Sie sicher, dass folgende Anforderungen erfüllt sind
 - Git ist installiert.
  
 - Ein Webbrowser für den Zugriff auf die WordPress-Seite.
- 
+
 ## 🚀 Installation
  
 ### 1. Repository klonen
@@ -56,6 +56,8 @@ Script ausführen:
 ```bash
 ./install.sh
 ```
+
+
 ## 📂 Repository Struktur
 ### 🌱 Root-Verzeichnis des Repositories
 
@@ -79,8 +81,9 @@ Beinhaltet verschiedene Shell-Skripte zur Automatisierung von Aufgaben. Beispiel
  
 - **elastic-ip.sh:** Bezieht sich auf die Verwaltung einer Elastic IP.  
  
-- **initialize-mysql-instance.sh** & **initialize-web-instance.sh:** Skripte zur Initialisierung von MySQL-Datenbankinstanzen und Webserver-Instanzen.  
- 
+- **initialize-mysql-instance.sh** & **initialize-web-instance.sh:** Skripte zur Initialisierung von MySQL-Datenbankinstanzen und Webserver-Instanzen.
+
+
 ## 📜 Funktion und Aufgabe der Scripts 
 
 ### install.sh
@@ -158,6 +161,7 @@ Beinhaltet verschiedene Shell-Skripte zur Automatisierung von Aufgaben. Beispiel
 1. Key Pair erstellen und lokal speichern
 2. Sicherheitsgruppe mit HTTP- und SSH-Regeln erstellen
 
+
 ## 🚀 Testfälle
 
 ### Test 1: Installation und Konfiguration der WordPress-Instanz
@@ -176,8 +180,7 @@ Beinhaltet verschiedene Shell-Skripte zur Automatisierung von Aufgaben. Beispiel
 **Ergebnis:** Die WordPress-Instanz wurde erfolgreich installiert.
 
 **Screenshot:**
-![alt text](images/image1.png)  
-*Abbildung 1: Zugriff auf Installierte Wordpress Instanz
+![alt text](images/image1.png)*Abbildung 1: Zugriff auf Installierte Wordpress Instanz
 
 **Fazit:**  
 Die Installation der WordPress-Instanz auf der AWS-Instanz (t2.micro) in der Region us-east-1 verlief ohne Fehler. Das Dashboard ist erreichbar und alle Grundfunktionen sind einsatzbereit. Vor der Produktivsetzung sollten jedoch Sicherheitsupdates angewendet und Standard-Admin-Einstellungen angepasst werden.
@@ -236,6 +239,7 @@ Die Login-Funktion von WordPress funktioniert einwandfrei. Der Anmeldeprozess l�
 
 **Empfehlung:** Keine weiteren Massnahmen erforderlich, da der Test erfolgreich war.
 
+
 ## ❓ FAQ
 ### Problem: AWS Zugriff wird abgebrochen
 
@@ -250,6 +254,8 @@ Das Problem tritt dann auf wen AWS (Learner Lab) ist nicht gestartet oder die AW
 - AWS Starten und die Credentials aktualliseren
 - optional: Delete script ausführen um altresten zu bereinigen
 
+---
+
 ### Problem:  Ungültiger SSH-Key
 
 **Fehlermeldung:**
@@ -262,6 +268,8 @@ An error occurred (InvalidKeyPair.NotFound) when calling the RunInstances operat
 
 Das Problem tritt dann auf wen weder Install noch uninstall Script den bestehenden Key erkennen und diesen weder ändern noch löschen können.
 - Key Manuel aus dem verzeichnis ***~/.ssh*** löschen
+
+---
 
 ### Problem: Fehler beim kopieren von Scripts auf die Instanz
 
@@ -282,11 +290,14 @@ Die Variable **SLEEP_DURATION="20"** in der Datei **variables.sh** definiert die
 
 **Connection refused scp: Connection Timed out:** Sekundenzahl reduzieren
 
+---
+
 ### Wie ändere ich Variablen im Script?
 
-Alle globalen Variablen sind im Script variables.sh zentraliert. Im Script können gemütlich dan Usernames, Passwörter, Grupennamen etc. geändert werden (Siehe Scripterkläung variables.sh).
+Alle globalen Variablen sind im Script variables.sh zentraliert. Im Script können gemütlich dan Usernames, Passwörter, Grupennamen etc. geändert werden (Siehe [variables.sh](#variablessh)).
 
 Sollen die eigens ausgewähleten Namen und Passwörter auch über wiederholende Installationen beibehalten werden, müssen diese auch im **Uninstall.sh** Script auf den Linien **75 - 86** hinzugefügt werden.
+
 
 ## 📖 Reflexion 
 ### 💡 [Jonas Sieber](https://github.com/josi-git "Jonas Sieber's GitHub Profile")
