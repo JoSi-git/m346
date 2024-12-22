@@ -180,7 +180,7 @@ Beinhaltet verschiedene Shell-Skripte zur Automatisierung von Aufgaben. Beispiel
 **Ergebnis:** Die WordPress-Instanz wurde erfolgreich installiert.
 
 **Screenshot:**
-![alt text](images/image1.png)*Abbildung 1: Zugriff auf Installierte Wordpress Instanz
+![alt text](images/image1.png)*Abbildung 1: Zugriff auf Installierte WordPress Instanz*
 
 **Fazit:**  
 Die Installation der WordPress-Instanz auf der AWS-Instanz (t2.micro) in der Region us-east-1 verlief ohne Fehler. Das Dashboard ist erreichbar und alle Grundfunktionen sind einsatzbereit. Vor der Produktivsetzung sollten jedoch Sicherheitsupdates angewendet und Standard-Admin-Einstellungen angepasst werden.
@@ -203,7 +203,7 @@ Die Installation der WordPress-Instanz auf der AWS-Instanz (t2.micro) in der Reg
 **Screenshot:**
 
 ![alt text](images/image2.png)  
-*Abbildung 2:* Zugriff auf die Verknüpfte MySQL Datenbank
+*Abbildung 2:* Zugriff auf die Verknüpfte MySQL Datenbank*
 
 **Fazit:**  
 Die Verbindung zur AWS-Instanz ist stabil, ohne Verbindungsabbrüche. Die Datenbankabfragen in MySQL Workbench werden zuverlässig angezeigt. Insgesamt läuft alles reibungslos und die Infrastruktur ist gut auf die nächsten Schritte vorbereitet.
@@ -226,13 +226,13 @@ Die Verbindung zur AWS-Instanz ist stabil, ohne Verbindungsabbrüche. Die Datenb
 **Screenshots:**
 
 ![alt text](images/image3.png)  
-*Abbildung 3: Konfiguration Admin Benutzer
+*Abbildung 3: Konfiguration Admin Benutzer*
 
 ![alt text](images/image4.png)  
-*Abbildung 4: Anmeldung am Wordpress Verwaltungsdashboard*
+*Abbildung 4: Anmeldung am WordPress Verwaltungsdashboard*
 
 ![alt text](images/image5.png)  
-*Abbildung 5: Wordpress Admin Dashboard*
+*Abbildung 5: WordPress Admin Dashboard*
 
 **Fazit:**  
 Die Login-Funktion von WordPress funktioniert einwandfrei. Der Anmeldeprozess läuft schnell und problemlos. Ab sofort wird beim Aufrufen der Webseite das Standard-Theme "Twenty Twenty-Five" angezeigt.
