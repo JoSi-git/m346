@@ -8,14 +8,14 @@
  
 ## 📜 Überblick
  
-Diese Anleitung beschreibt die Schritte, um eine WordPress-Installation in der Amazon Web Services (AWS) Cloud bereitzustellen. Alle notwendigen Konfigurationsdateien und Skripte befinden sich in diesem Repository. Mithilfe den unterstehenden Schritten, kann die Installation komplett nachgestellt werden.
+Diese Anleitung beschreibt die Schritte, um eine WordPress-Installation in der Amazon Web Services (AWS) Cloud bereitzustellen. Alle notwendigen Konfigurationsdateien und Skripte befinden sich in diesem Repository. Mithilfe der unterstehenden Schritte kann die Installation komplett nachgestellt werden.
  
 ## 📂 Inhaltsverzeichnis
  
 1. [Voraussetzungen](#-voraussetzungen)
 2. [Installation](#-installation)
 3. [Repository Struktur](#-repository-struktur)
-4. [Skript erklärungen](#-skript-erklärungen)
+4. [Funktion und Aufgabe der Scripts](#-funktion-und-aufgabe-der-scripts)
 5. [Testfälle](#-testfälle)
 6. [FAQ](#-faq)
 7. [Reflexion](#-reflexion)
@@ -61,9 +61,9 @@ Script ausführen:
 ## 📂 Repository Struktur
 ### 🌱 Root-Verzeichnis des Repositories
 
-Beinhaltet das Install.sh /uninstall.sh Script sowie die Dokumentation und alle git Dateien.
+Beinhaltet das Install.sh /uninstall.sh Script sowie die Dokumentation und alle Git-Dateien.
 
-- **install.sh:** Ein zentrales Installationsskript, das mehrere der oben genannten Skripte zusammenführt und ausführt.
+- **install.sh:** Ein zentrales Installationsskript, das mehrere der folgenden Skripte zusammenführt und ausführt.
 
 - **uninstall.sh:** Ein Skript zum Löschen aller Instanzen, Dateien und Ressourcen.  
 
@@ -79,7 +79,7 @@ Beinhaltet folgende Bash-Skripte zur Automatisierung von Aufgaben:
  
 Beinhaltet verschiedene Shell-Skripte zur Automatisierung von Aufgaben. Beispiele sind:  
  
-- **elastic-ip.sh:** Bezieht sich auf die Verwaltung einer Elastic IP.  
+- **elastic-ip.sh:** Bezieht sich auf die Verwaltung einer Elastic-IP.  
  
 - **initialize-mysql-instance.sh** & **initialize-web-instance.sh:** Skripte zur Initialisierung von MySQL-Datenbankinstanzen und Webserver-Instanzen.
 
@@ -115,7 +115,7 @@ Beinhaltet verschiedene Shell-Skripte zur Automatisierung von Aufgaben. Beispiel
 ### mysqlinstall.sh  
  
 1. Update der Paketliste
-3. MySQL-Server Installation mit allen abhängigkeiten
+3. MySQL-Server Installation mit allen Abhängigkeiten
 3. Start des MySQL-Dienstes
 ### wpinstall.sh  
  
@@ -132,12 +132,12 @@ Beinhaltet verschiedene Shell-Skripte zur Automatisierung von Aufgaben. Beispiel
 ### uninstall.sh
 
 1. Instanzen mit **`$SEC_GROUP_NAME`** beenden.
-2. Sicherheitsgruppe, Key Pair **`$KEY_NAME`** und Elastic IPs löschen.
+2. Sicherheitsgruppe, Key Pair **`$KEY_NAME`** und Elastic-IPs löschen.
 3. **`variables.sh`** löschen und neu mit Standardwerten erstellen.
 
 ### elastic-ip.sh  
 
-1. Automatisierung der Elastic IP Zuweisung
+1. Automatisierung der Elastic-IP Zuweisung
 2. Verhindert redundante Konfigurationen mit **`CONFIG_STEP`**
 3. Aktualisiert Konfigurationsdatei für öffentliche IPs
 
@@ -250,9 +250,9 @@ An error occurred (UnauthorizedOperation) when calling the CreateSecurityGroup o
 
 **Problemlösung**:
 
-Das Problem tritt dann auf wen AWS (Learner Lab) ist nicht gestartet oder die AWS Cli Crednetials sind falsch oder abgelaufen sind.
-- AWS Starten und die Credentials aktualliseren
-- optional: Delete script ausführen um altresten zu bereinigen
+Das Problem tritt dann auf, wenn AWS (Learner Lab) nicht gestartet ist oder die AWS Cli Credentials falsch oder abgelaufen sind.
+- AWS starten und die Credentials aktualisieren 
+- optional: uninstall.sh Script ausführen, um Altlasten zu bereinigen
 
 ---
 
@@ -266,8 +266,8 @@ An error occurred (InvalidKeyPair.NotFound) when calling the RunInstances operat
 
 **Problemlösung**:
 
-Das Problem tritt dann auf wen weder Install noch uninstall Script den bestehenden Key erkennen und diesen weder ändern noch löschen können.
-- Key Manuel aus dem verzeichnis ***~/.ssh*** löschen
+Das Problem tritt dann auf, wenn weder Install noch uninstall Script den bestehenden Key erkennt und diesen weder ändern noch löschen kann.
+- Key Manuel aus dem Verzeichnis ***~/.ssh*** löschen
 
 ---
 
@@ -294,9 +294,9 @@ Die Variable **SLEEP_DURATION="20"** in der Datei **variables.sh** definiert die
 
 ### Wie ändere ich Variablen im Script?
 
-Alle globalen Variablen sind im Script variables.sh zentraliert. Im Script können gemütlich dan Usernames, Passwörter, Grupennamen etc. geändert werden (Siehe [variables.sh](#variablessh)).
+Alle globalen Variablen sind im Script variables.sh zentralisiert. Im Script können gemütlich dann Username, Passwörter, Gruppennamen etc. geändert werden (Siehe [variables.sh](#variablessh)).
 
-Sollen die eigens ausgewähleten Namen und Passwörter auch über wiederholende Installationen beibehalten werden, müssen diese auch im **Uninstall.sh** Script auf den Linien **75 - 86** hinzugefügt werden.
+Sollen die eigens ausgewählten Namen und Passwörter auch über wiederholende Installationen beibehalten werden, müssen diese auch im **Uninstall.sh** Script auf den Linien **75 - 86** hinzugefügt werden.
 
 
 ## 📖 Reflexion 
