@@ -1,4 +1,4 @@
-# WordPress auf AWS – Setup-Anleitung
+# WordPress auf AWS EC2 – Setup-Anleitung
  
 [![Silas Gubler](https://img.shields.io/badge/Silas_Gubler-FF4500?style=for-the-badge)](https://github.com/arkaizn)
 [![David Kästli](https://img.shields.io/badge/David_Kästli-32CD32?style=for-the-badge)](https://github.com/dka-stat)
@@ -6,11 +6,11 @@
 [![Lizenz](https://img.shields.io/badge/Lizenz-FFD700?style=for-the-badge)](https://github.com/JoSi-git/m346/blob/main/LICENSE)
  
  
-# 📜 Überblick
+## 📜 Überblick
  
 Diese Anleitung beschreibt die Schritte, um eine WordPress-Installation in der Amazon Web Services (AWS) Cloud bereitzustellen. Alle notwendigen Konfigurationsdateien und Skripte befinden sich in diesem Repository. Folgen Sie den untenstehenden Schritten, um die Installation nachzustellen.
  
-# 📂 Inhaltsverzeichnis
+## 📂 Inhaltsverzeichnis
  
 1. [Voraussetzungen](#-voraussetzungen)
 2. [Installation](#-installation)
@@ -20,7 +20,7 @@ Diese Anleitung beschreibt die Schritte, um eine WordPress-Installation in der A
 6. [FAQ](#-faq)
 7. [Reflexion](#-reflexion)
  
-# ✅ Voraussetzungen
+## ✅ Voraussetzungen
  
 Bevor Sie starten, stellen Sie sicher, dass folgende Anforderungen erfüllt sind:
  
@@ -33,7 +33,7 @@ Bevor Sie starten, stellen Sie sicher, dass folgende Anforderungen erfüllt sind
  
 - Ein Webbrowser für den Zugriff auf die WordPress-Seite.
  
-# 🚀 Installation
+## 🚀 Installation
  
 ### 1. Repository klonen
  
@@ -56,18 +56,23 @@ Script ausführen:
 ```bash
 ./install.sh
 ```
-# 📂 Repository Struktur  
- 
+## 📂 Repository Struktur
+### 🌱 Root-Verzeichnis des Repositories
+
+Beinhaltet das Install.sh /uninstall.sh Script sowie die Dokumentation und alle git Dateien.
+
+- **install.sh:** Ein zentrales Installationsskript, das mehrere der oben genannten Skripte zusammenführt und ausführt.
+
+- **uninstall.sh:** Ein Skript zum Löschen aller Instanzen, Dateien und Ressourcen.  
+
 ### 🛠️ 1. Ordner config_files  
  
 Beinhaltet folgende Bash-Skripte zur Automatisierung von Aufgaben:
  
 - **mysqlinstall.sh:** Skript zur Installation/Konfiguration von MySQL.  
  
-- **wpinstall.sh:** Skript zur Installation/Einrichtung von WordPress.  
- 
----
- 
+- **wpinstall.sh:** Skript zur Installation/Einrichtung von WordPress.
+
 ### ⚙️ 2. Ordner Scripts  
  
 Beinhaltet verschiedene Shell-Skripte zur Automatisierung von Aufgaben. Beispiele sind:  
@@ -76,190 +81,84 @@ Beinhaltet verschiedene Shell-Skripte zur Automatisierung von Aufgaben. Beispiel
  
 - **initialize-mysql-instance.sh** & **initialize-web-instance.sh:** Skripte zur Initialisierung von MySQL-Datenbankinstanzen und Webserver-Instanzen.  
  
----
- 
-### 🚀 3. install.sh  / uninstall.sh
+## 📜 Funktion und Aufgabe der Scripts 
 
-- **install.sh:** Ein zentrales Installationsskript, das mehrere der oben genannten Skripte zusammenführt und ausführt.
+### install.sh
 
-- **uninstall.sh:** Ein Skript zum Löschen aller Instanzen, Dateien und Ressourcen.  
+1. Ruft **initialize-mysql-instance.sh** zur Installation des MySQL-Servers auf.
+2. Ruft **initialize-web-instance.sh** zur Installation des Webservers auf.
+3. Ruft **elastic-ip.sh** zur Initialisierung der Elastic-IP auf.
+
+### variables.sh
  
----
- 
-### 🔧 4. Dokumentation und Verwaltungsdateien  
-#### 🚫 .gitignore  
- 
-- Eine Datei zur Angabe von Dateien und Ordnern, die nicht in das Git-Repository aufgenommen werden sollen.  
- 
-#### 📜 LICENSE  
- 
-- Enthält Informationen zur Lizenzierung des Projekts.  
- 
-#### 📝 README.md  
- 
-- Eine Markdown-Datei, die normalerweise eine Erklärung des Projekts, der Struktur und der Verwendung enthält.  
- 
-# 📜 Skript erklärungen  
- 
-Unsere Skripts werden hier noch im detail erklärt.
- 
-### 📝 install.sh  
- 
-1. Elastic IP Konfiguration Funktion
- 
-    * Eine Funktion **`configure_elastic_ip`** fragt den Nutzer, ob eine Elastic IP (statische öffentliche IP-Adresse für AWS EC2-Instanzen) konfiguriert werden soll  
- 
-    * Falls der Nutzer **`j (Ja)`** eingibt, wird das Skript elastic-ip.sh ausgeführt  
- 
-    * Bei **`n (Nein)`** wird die Konfiguration übersprungen  
- 
-2. Initialisierung des MySQL-Servers & Webservers
- 
-    * Das Skript **`initialize-mysql-instance.sh`** & **`initialize-web-instance.sh`**  wird dann ausgeführt, um eine EC2-Instanz als MySQL-Server und auch als Webserver einzurichten  
- 
-3. Initialisierung Elastic-IP
- 
-    * Nachdem der Webserver und der MySQL-Server-Konfiguriert wurde, wird bei bedarf eine Elastic IP hinzugefügt
----
- 
-### 📜 mysqlinstall.sh  
+**User Variablen (veränderbar):**
+
+    SLEEP_DURATION=20
+    KEY_NAME=djs-key
+    SEC_GROUP_NAME=djs-sec-group
+	DB_NAME=wordpress
+	DB_USER=wp-user
+	DB_PASSWORD=Riethuesli2024_DJS
+	
+**Script Variablen (unveränderbar)**:
+	
+	CONFIG_STEP=1
+	INSTANCE_ID1=i-03238f46b952c0978
+	PUBLIC_IP1="35.169.10.50"
+	MySQL_installation_File="./config_files/mysqlinstall.sh"
+	INSTANCE_ID2=i-0091e12fea4f1a1a8
+	PUBLIC_IP2="44.193.145.66"
+
+### mysqlinstall.sh  
  
 1. Update der Paketliste
+3. MySQL-Server Installation mit allen abhängigkeiten
+3. Start des MySQL-Dienstes
+### wpinstall.sh  
  
-    * Das Skript updated zuerst alle Pakete mit dem **`sudo apt upgrade -y`** Befehl  
- 
-2. MySQL-Server Installation
- 
-    * Installiert den MySQL-Server, der das Datenbankmanagementsystem bereitstellt
-3. Start des MySQL-Dienstes**
- 
-    * Startet den MySQL-Dienst, damit die MySQL-Datenbank sofort läuft.
----
-### 📝 variables.sh
- 
-1. Variablen vergabe:  
- 
-    * SLEEP_DURATION    -> 20
- 
-    * KEY_NAME          -> djs-key
- 
-    * SEC_GROUP_NAME    -> djs-sec-group
- 
-    * CONFIG_STEP       -> 1                       
----
-### 📜 wpinstall.sh  
- 
-1. Aktualisieren der Paketliste
- 
-    * Installiert die neusten Pakete mit dem **`sudo apt upgrade Befehl`**
- 
-2. Installation Apache2
- 
-    * Der Apache dienst wird mit **`sudo systemctl start apache2`** gestartet
- 
-3. Apache-Dienst beim Booten aktivieren
- 
-    * Apache wird mit **`sudo systemctl enable apache2`** in den Systemautostart hinzugefügt
- 
-4. Apache Status überprüfen
- 
-    * Status abfrage mit **`sudo systemctl status apache2`**
- 
----
- 
-### 📝  del-script.sh
- 
-1. EC2-Instanzen suchen und beenden
- 
-    * Findet EC2-Instanzen, die mit der Sicherheitsgruppe **`$SEC_GROUP_NAME`** verknüpft sind
- 
-    * Beendet und löscht die gefundenen Instanzen
- 
-2. Sicherheitsgruppe löschen, Key Pair löschen und Elastic IPs freigeben
- 
-    * Löscht die definierte Sicherheitsgruppe, falls diese existiert
- 
-    * Löscht das  Key-Pair **`$KEY_NAME`** aus AWS und entfernt die lokale Kopie des zugehörigen **`.pem`** Schlüssels
- 
-    * Holt alle Elastic IPs und gibt sie wieder frei
- 
-3. Konfigurationsdatei aktualisieren
- 
-    * Löscht die alte **`ariables.sh-Datei.`** und erstellt sie wieder neu mit den Standardwerten
- 
----
- 
-### 📜 elastic-ip.sh  
- 
-1. Automatisierung der Zuweisung von Elastic IPs an AWS EC2-Instanzen
- 
-2. Verhindert redundante Konfigurationen durch den Status **`CONFIG_STEP`**
- 
-3. Aktualisiert die Konfigurationsdatei dynamisch, um den Überblick über öffentliche IPs zu behalten
- 
----
- 
-### 📝 initialize-mysql-instance.sh  
- 
-1. Prüft Verzeichnis und das MySQL-Installationsskript
- 
-    * Erstellt das Verzeichnis ~/ec2mysqlserver, falls es nicht existiert.
- 
-    * Prüft und ob mysqlinstall.sh existiert, das später auf der EC2-Instanz ausgeführt wird.
- 
-2. Startet eine neue EC2-Instanz
- 
-3. Initialisierung der Instanz abwarten
- 
-    * Wartet für die Dauer von der **`$SLEEP_DURATION`** dauer die im **`variables.sh`** angegeben ist
- 
-4. MySQL-Installationsskript übertragen und ausführen
- 
-    * Kopiert die Dateien **`mysqlinstall.sh`** und **`variables.sh`** via SCP auf die EC2-Instanz.
- 
-    * Führt das Skript via. SSH auf dem System aus
- 
-5. Ausgabe der Instanzinformationen und Aktualisieren der Konfigurationsdatei
- 
-    * Gibt die Instanz-ID und die öffentliche IP-Adresse in einer Tabelle aus.
- 
-    * Schreibt die ermittelte **`INSTANCE_ID1, PUBLIC_IP1 und MySQL_installation_File`** in die Datei **`variables.sh.`**
- 
----
- 
-### 📜 initialize-web-instance.sh  
- 
-1. Verzeichnis erstellen und WordPress-Installationsskript prüfen
-    * Erstellt das Verzeichnis **`~/ec2webserver`**, falls es nicht existiert.
-    * Überprüft, ob die Datei wpinstall.sh im Verzeichnis **`./config_files/`** existiert.  
- 
-2. EC2-Instanz starten und die IP der Instanz ermitteln
-    * Holt die Public IP der gestarteten Instanz.
- 
-3. Initialisierung der Instanz abwarten
- 
-    * Wartet für die Dauer von der **`$SLEEP_DURATION`** dauer die im **`variables.sh`** angegeben ist
- 
+1. Paketliste aktualisieren
+2. Apache2 installieren
+3. Apache-Dienst starten und aktivieren
+4. PHP und MySQL-Unterstützung installieren
+5. MySQL-Client installieren und Verbindung prüfen
+6. WordPress herunterladen und vorbereiten
+7. WordPress mithilfe **wp-config.php** konfigurieren
+8. Anpassen des DocumentRoot und Entfernen der Standardseite.
+9. Neustart des Apache-Dienstes, um alle Änderungen zu übernehmen.
+
+### uninstall.sh
+
+1. Instanzen mit **`$SEC_GROUP_NAME`** beenden.
+2. Sicherheitsgruppe, Key Pair **`$KEY_NAME`** und Elastic IPs löschen.
+3. **`variables.sh`** löschen und neu mit Standardwerten erstellen.
+
+### elastic-ip.sh  
+
+1. Automatisierung der Elastic IP Zuweisung
+2. Verhindert redundante Konfigurationen mit **`CONFIG_STEP`**
+3. Aktualisiert Konfigurationsdatei für öffentliche IPs
+
+### initialize-mysql-instance.sh
+
+1. Verzeichnis und MySQL-Installationsskript prüfen
+2. EC2-Instanz starten und Initialisierung abwarten
+3. MySQL-Installationsskript übertragen und ausführen
+4. Instanzinformationen ausgeben und Konfigurationsdatei aktualisieren
+
+### initialize-web-instance.sh
+
+1. Verzeichnis erstellen und Web-Installationsskript prüfen
+2. EC2-Instanz starten und IP ermitteln
+3. Initialisierung abwarten
 4. Web-Installationsskript übertragen und ausführen
- 
-    * Kopiert die Dateien **`mysqlinstall.sh`** und **`variables.sh`** via SCP auf die EC2-Instanz.
- 
-5. Ausgabe der Instanzinformationen und Aktualisieren der Konfigurationsdatei
- 
-    * Gibt die Instanz-ID und die öffentliche IP-Adresse in einer Tabelle aus.
- 
-    * Schreibt die ermittelte **`INSTANCE_ID2, PUBLIC_IP2`** und **`Wordpress_installation_File`** in die Datei **`variables.sh.`**
- 
----
- 
-### 📝 sec-key.sh
- 
-1. Key Pair erstellung und abspeicherung
-    * Generiert ein neues Key Pair, falls es nicht existiert, und speichert es lokal für die Nutzung mit EC2-Instanzen.
-2. Sicherheitsgruppen konfiguration und erstellung
-    * Erstellt eine Sicherheitsgruppe mit HTTP- und SSH-Zugriffsregeln, falls diese nicht vorhanden ist.
- 
-# 🚀 Testfälle
+5. Instanzinformationen ausgeben und Konfigurationsdatei aktualisieren
+
+### sec-key.sh
+
+1. Key Pair erstellen und lokal speichern
+2. Sicherheitsgruppe mit HTTP- und SSH-Regeln erstellen
+
+## 🚀 Testfälle
 
 ### Test 1: Installation und Konfiguration der WordPress-Instanz
 
@@ -267,73 +166,78 @@ Unsere Skripts werden hier noch im detail erklärt.
 
 **Testperson:** Silas Gubler
 
-**Spezifische Informationen:** Die AWS-Instanz wurde mit den Standard-WordPress-Einstellungen konfiguriert.
+**Spezifische Informationen:**
+- **AWS-Instanz:** t2.micro in der Region us-east-1
+- **WordPress-Version:** 6.7 »Rollins«
+- **Konfiguration:** Standard-WordPress-Einstellungen
 
 #### Testergebnisse: 
 
-**Ergebnis :** Die WordPress-Instanz wurde erfolgreich installiert.
+**Ergebnis:** Die WordPress-Instanz wurde erfolgreich installiert.
 
 **Screenshot:**
+![alt text](images/image1.png)  
+*Abbildung 1: Zugriff auf Installierte Wordpress Instanz
 
-![alt text](images/image1.png)
-*Abbildung 1: Wordpress Dashboardkonfiguration*
-
-**Fazit:** Die Installation verlief wie erwartet, ohne Fehler. 
+**Fazit:**  
+Die Installation der WordPress-Instanz auf der AWS-Instanz (t2.micro) in der Region us-east-1 verlief ohne Fehler. Das Dashboard ist erreichbar und alle Grundfunktionen sind einsatzbereit. Vor der Produktivsetzung sollten jedoch Sicherheitsupdates angewendet und Standard-Admin-Einstellungen angepasst werden.
 
 **Empfehlung:** Sicherstellen, dass alle Sicherheitsupdates vor der Produktivsetzung angewendet werden.
- 
+
+---
 ### Test 2: Verbindung zwischen WordPress und MySQL-Server
 
 **Testzeitpunkt:** 15:39 Freitag 20/12/24
 
-**Testperson:** Silas
+**Testperson:** Silas Gubler
 
 **Spezifische Informationen:** Die MySQL-Datenbank wurde mit den in der Variablen-Datei angegebenen Werten konfiguriert.
 
-**Testergebnisse:**
+#### Testergebnisse:
 
-**Ergebnis:** Die Verbindung zwischen WordPress und MySQL war stabil und konnte ohne probleme eingerichtet werden.
+**Ergebnis:** Die Verbindung zwischen WordPress und MySQL war stabil und konnte ohne Probleme eingerichtet werden.
 
 **Screenshot:**
 
-![alt text](images/image2.png)
-*Abbildung 2:*
+![alt text](images/image2.png)  
+*Abbildung 2:* Zugriff auf die Verknüpfte MySQL Datenbank
 
-**Fazit:** Die Verbindung funktioniert einwandfrei, es gab keine Verbindungsabbrüche. Links sieht man auch die posts mit mysqlworkbench.
-        
-**Empfehlung:** Regelmäßige Backups der MySQL-Datenbank erstellen, um Datenverlust zu vermeiden.
+**Fazit:**  
+Die Verbindung zur AWS-Instanz ist stabil, ohne Verbindungsabbrüche. Die Datenbankabfragen in MySQL Workbench werden zuverlässig angezeigt. Insgesamt läuft alles reibungslos und die Infrastruktur ist gut auf die nächsten Schritte vorbereitet.
 
+**Empfehlung:** Regelmässige Backups der MySQL-Datenbank erstellen, um Datenverlust zu vermeiden.
+
+---
 ### Test 3: Funktionalität des WordPress-Logins
 
 **Testzeitpunkt:** 15:54 Freitag 20/12/24
 
-**Testperson:** Silas
+**Testperson:** Silas Gubler
 
 **Spezifische Informationen:** Test der WordPress-Login-Funktion mit einem Admin-Benutzer, um sicherzustellen, dass der Zugriff korrekt funktioniert.
-    
-**Testergebnisse:**
 
-Ergebnis: Der Login war erfolgreich, der Admin-Bereich konnte ohne Probleme aufgerufen werden.
+#### Testergebnisse:
 
-**Screenshots: 
-![alt text](images/image3.png)
+**Ergebnis:** Der Login war erfolgreich, der Admin-Bereich konnte ohne Probleme aufgerufen werden.
 
-*Abbildung 1: Wordpress Dashboardkonfiguration*
+**Screenshots:**
 
-![alt text](images/image4.png)
+![alt text](images/image3.png)  
+*Abbildung 3: Konfiguration Admin Benutzer
 
-*Abbildung 1: Wordpress Dashboardkonfiguration*
+![alt text](images/image4.png)  
+*Abbildung 4: Anmeldung am Wordpress Verwaltungsdashboard*
 
-![alt text](images/image5.png)
+![alt text](images/image5.png)  
+*Abbildung 5: Wordpress Admin Dashboard*
 
-*Abbildung 1: Wordpress Dashboardkonfiguration*
+**Fazit:**  
+Die Login-Funktion von WordPress funktioniert einwandfrei. Der Anmeldeprozess läuft schnell und problemlos. Ab sofort wird beim Aufrufen der Webseite das Standard-Theme "Twenty Twenty-Five" angezeigt.
 
-**Fazit:** Die Login-Funktion von WordPress funktioniert wie erwartet.
+**Empfehlung:** Keine weiteren Massnahmen erforderlich, da der Test erfolgreich war.
 
-**Empfehlung:** Keine weiteren Maßnahmen erforderlich, da der Test erfolgreich war.
-
-# ❓ FAQ
-## Problem: AWS Zugriff wird abgebrochen
+## ❓ FAQ
+### Problem: AWS Zugriff wird abgebrochen
 
 **Fehlermeldung:**
  ```bash #Fehlermeldung Zugriffsfehler
@@ -346,8 +250,7 @@ Das Problem tritt dann auf wen AWS (Learner Lab) ist nicht gestartet oder die AW
 - AWS Starten und die Credentials aktualliseren
 - optional: Delete script ausführen um altresten zu bereinigen
 
----
-## Problem:  Ungültiger SSH-Key
+### Problem:  Ungültiger SSH-Key
 
 **Fehlermeldung:**
  ```bash #Fehlermeldung Ungültiger SSH-Key
@@ -360,8 +263,7 @@ An error occurred (InvalidKeyPair.NotFound) when calling the RunInstances operat
 Das Problem tritt dann auf wen weder Install noch uninstall Script den bestehenden Key erkennen und diesen weder ändern noch löschen können.
 - Key Manuel aus dem verzeichnis ***~/.ssh*** löschen
 
----
-## Problem: Fehler beim kopieren von Scripts auf die Instanz
+### Problem: Fehler beim kopieren von Scripts auf die Instanz
 
 **Fehlermeldung:**
  ```bash #Fehlermeldung Ungültiger SSH-Key
@@ -379,6 +281,12 @@ Die Variable **SLEEP_DURATION="20"** in der Datei **variables.sh** definiert die
 **Connection refused scp: Connection closed:** Sekundenzahl erhöhen 
 
 **Connection refused scp: Connection Timed out:** Sekundenzahl reduzieren
+
+### Wie ändere ich Variablen im Script?
+
+Alle globalen Variablen sind im Script variables.sh zentraliert. Im Script können gemütlich dan Usernames, Passwörter, Grupennamen etc. geändert werden (Siehe Scripterkläung variables.sh).
+
+Sollen die eigens ausgewähleten Namen und Passwörter auch über wiederholende Installationen beibehalten werden, müssen diese auch im **Uninstall.sh** Script auf den Linien **75 - 86** hinzugefügt werden.
 
 ## 📖 Reflexion 
 ### 💡 [Jonas Sieber](https://github.com/josi-git "Jonas Sieber's GitHub Profile")
