@@ -37,7 +37,7 @@ Bevor Sie starten, stellen Sie sicher, dass folgende Anforderungen erfüllt sind
  
 ### 1. Repository klonen
  
-Klonen Sie dieses Repository auf Ihren lokalen Rechner:
+Klonen Sie das Repository auf Ihren lokalen Rechner:
  
 ```bash
 git clone https://github.com/JoSi-git/m346.git
